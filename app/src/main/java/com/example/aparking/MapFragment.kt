@@ -15,16 +15,20 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import com.yandex.mapkit.*
+import com.yandex.mapkit.directions.driving.DrivingOptions
 import com.yandex.mapkit.geometry.Geometry
 import com.yandex.mapkit.geometry.Point
 import com.yandex.mapkit.map.*
 import com.yandex.mapkit.map.Map
 import com.yandex.mapkit.mapview.MapView
 import com.yandex.mapkit.search.*
+import com.yandex.mapkit.transport.masstransit.Route
 import com.yandex.mapkit.user_location.UserLocationLayer
 import com.yandex.runtime.Error
 import com.yandex.runtime.image.ImageProvider
@@ -89,6 +93,17 @@ class MapFragment : Fragment() {
                         )
                     ) // Yellow
                 }
+            }
+        }
+
+        // Открытие бокового меню
+        val menuButton = view.findViewById<ImageButton>(R.id.menu_button)
+        menuButton.setOnClickListener {
+            val drawerLayout = (activity as MapActivity).getDrawerLayout()
+            if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+                drawerLayout.closeDrawer(GravityCompat.START)
+            } else {
+                drawerLayout.openDrawer(GravityCompat.START)
             }
         }
 
@@ -284,6 +299,7 @@ class MapFragment : Fragment() {
 //            submitQuery(searchEdit.text.toString())
 //        }
 //    }
+
     private fun performSearch(query: String) {
         val searchManager =
             SearchFactory.getInstance().createSearchManager(SearchManagerType.COMBINED)
