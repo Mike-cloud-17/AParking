@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:paddingBottom="20dp">
+
+    <!-- Кнопка построения маршрута -->
+
+    <ImageButton
+        android:id="@+id/routeButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_route"
+        app:layout_constraintBottom_toBottomOf="@id/carNumberLayout"
+        app:layout_constraintTop_toTopOf="@id/carNumberLayout"
+        app:layout_constraintEnd_toStartOf="@+id/carNumberLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/routeButtonLabel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:maxLines="2"
+        android:layout_marginTop="1dp"
+        android:layout_marginBottom="3dp"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:text="Маршрут до ближайшей стоянки"
+        app:layout_constraintBottom_toTopOf="@id/parkingButton"
+        app:layout_constraintEnd_toEndOf="@id/routeButton"
+        app:layout_constraintStart_toStartOf="@id/routeButton" />
+
+    <!-- Номер автомобиля -->
+
+    <LinearLayout
+        android:id="@+id/carNumberLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:background="@drawable/search"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toTopOf="@id/locationButton"
+        app:layout_constraintBottom_toBottomOf="@id/locationButton"
+        app:layout_constraintEnd_toStartOf="@id/locationButton"
+        app:layout_constraintStart_toEndOf="@id/routeButton">
+
+        <ImageView
+            android:id="@+id/flagImage"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_flag_kz" />
+
+        <TextView
+            android:id="@+id/carNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="KZ  777 KNS | 02"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:layout_marginEnd="7dp" />
+
+        <ImageView
+            android:id="@+id/dropdownButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_dropdown" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/carNumberLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxLines="2"
+        android:layout_marginTop="1dp"
+        android:layout_marginBottom="3dp"
+        android:ellipsize="end"
+        android:text="Мой автомобиль"
+        app:layout_constraintTop_toBottomOf="@id/carNumberLayout"
+        app:layout_constraintEnd_toEndOf="@id/carNumberLayout"
+        app:layout_constraintStart_toStartOf="@id/carNumberLayout"
+        app:layout_constraintBottom_toTopOf="@id/parkingButton"/>
+
+    <!-- Кнопка для отображения текущего местоположения -->
+
+    <ImageButton
+        android:id="@+id/locationButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_location"
+        app:layout_constraintBottom_toTopOf="@id/locationButtonLabel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/carNumberLayout" />
+
+    <TextView
+        android:id="@+id/locationButtonLabel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:layout_marginBottom="3dp"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:text="Текущее местоположение"
+        android:gravity="center"
+        app:layout_constraintBottom_toTopOf="@id/parkingButton"
+        app:layout_constraintEnd_toEndOf="@id/locationButton"
+        app:layout_constraintStart_toStartOf="@id/locationButton" />
+
+    <!-- Кнопка для начала парковки -->
+
+    <Button
+        android:id="@+id/parkingButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="#FFFF00"
+        android:text="🅿️ Начинаю парковаться"
+        android:textColor="#000000"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

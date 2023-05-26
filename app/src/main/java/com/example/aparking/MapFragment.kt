@@ -21,14 +21,12 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import com.yandex.mapkit.*
-import com.yandex.mapkit.directions.driving.DrivingOptions
 import com.yandex.mapkit.geometry.Geometry
 import com.yandex.mapkit.geometry.Point
 import com.yandex.mapkit.map.*
 import com.yandex.mapkit.map.Map
 import com.yandex.mapkit.mapview.MapView
 import com.yandex.mapkit.search.*
-import com.yandex.mapkit.transport.masstransit.Route
 import com.yandex.mapkit.user_location.UserLocationLayer
 import com.yandex.runtime.Error
 import com.yandex.runtime.image.ImageProvider
@@ -45,8 +43,6 @@ class MapFragment : Fragment() {
 
     private lateinit var locationMapKit: UserLocationLayer
     private lateinit var searchEdit: EditText
-//    private lateinit var searchManager: SearchManager
-//    private lateinit var searchSession: Session
 
     private val LOCATION_PERMISSION_REQUEST_CODE = 1
     private val LOCATION_PERMISSIONS = arrayOf(
@@ -110,11 +106,7 @@ class MapFragment : Fragment() {
         // Создаем иконку с нашей локацией
         locationMapKit = mapKit.createUserLocationLayer(mapView.mapWindow)
         locationMapKit.isVisible = true
-//        locationMapKit.setObjectListener(this)
 
-//        SearchFactory.initialize(requireContext())
-//        searchManager = SearchFactory.getInstance().createSearchManager(SearchManagerType.COMBINED)
-//        mapView.map.addCameraListener(this)
         searchEdit = view.findViewById(R.id.search_text)
         searchEdit.setOnEditorActionListener { v, actionId, event ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
@@ -124,12 +116,6 @@ class MapFragment : Fragment() {
                 false
             }
         }
-//        searchEdit.setOnEditorActionListener { v, actionId, event ->
-//            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-//                submitQuery(searchEdit.text.toString())
-//            }
-//            false
-//        }
 
         // Запрос пермишенов
         if (hasLocationPermission()) {
@@ -231,75 +217,6 @@ class MapFragment : Fragment() {
         mapView.onStart()
     }
 
-//    override fun onSearchResponse(response: Response) {
-//        val mapObjects: MapObjectCollection = mapView.map.mapObjects
-//        mapObjects.clear()
-//        for (searchResult in response.collection.children) {
-//            val resultLocation = searchResult.obj!!.geometry[0].point!!
-//            mapObjects.addPlacemark(
-//                resultLocation,
-//                ImageProvider.fromResource(requireContext(), R.drawable.search_result)
-//            )
-//        }
-//    }
-//
-//    override fun onSearchError(error: Error) {
-//        var errorMessage = "Неизвестная ошибка"
-//        if (error is RemoteError) {
-//            errorMessage = "Беспроводная ошибка"
-//        } else if (error is NetworkError) {
-//            errorMessage = "Проблема с интернетом"
-//        }
-//        Toast.makeText(requireContext(), errorMessage, Toast.LENGTH_SHORT).show()
-//    }
-
-    //    private fun submitQuery(query: String) {
-//        searchSession = searchManager.submit(
-//            query,
-//            VisibleRegionUtils.toPolygon(mapView.map.visibleRegion),
-//            SearchOptions(),
-//            this
-//        )
-//    }
-//
-//    override fun onObjectAdded(userLocationView: UserLocationView) {
-//        locationMapKit.setAnchor(
-//            PointF((mapView.width() * 0.5).toFloat(), (mapView.height() * 0.5).toFloat()),
-//            PointF((mapView.width() * 0.5).toFloat(), (mapView.height() * 0.83).toFloat())
-//        )
-//        userLocationView.arrow.setIcon(ImageProvider.fromResource(requireContext(),
-//            R.drawable.search_result
-//        ))
-//        val picIcon = userLocationView.pin.useCompositeIcon()
-//        picIcon.setIcon(
-//            "icon",
-//            ImageProvider.fromResource(requireContext(), R.drawable.search_result),
-//            IconStyle().setAnchor(PointF(0f, 0f)).setRotationType(RotationType.ROTATE).setZIndex(0f)
-//                .setScale(1f)
-//        )
-//        picIcon.setIcon("pin", ImageProvider.fromResource(requireContext(), R.drawable.search_result),
-//            IconStyle().setAnchor(PointF(0.5f, 0.5f)).setRotationType(RotationType.ROTATE).setZIndex(1f).setScale(0.5f)
-//        )
-//        userLocationView.accuracyCircle.fillColor = Color.BLUE and -0x66000001
-//    }
-//
-//    override fun onObjectRemoved(p0: UserLocationView) {
-//    }
-//
-//    override fun onObjectUpdated(p0: UserLocationView, p1: ObjectEvent) {
-//    }
-//
-//    override fun onCameraPositionChanged(
-//        map: Map,
-//        cameraPosition: CameraPosition,
-//        cameraUpdateReason: CameraUpdateReason,
-//        finished: Boolean
-//    ) {
-//        if (finished){
-//            submitQuery(searchEdit.text.toString())
-//        }
-//    }
-
     private fun performSearch(query: String) {
         val searchManager =
             SearchFactory.getInstance().createSearchManager(SearchManagerType.COMBINED)
@@ -344,5 +261,3 @@ class MapFragment : Fragment() {
         searchManager.submit(query, geometry, searchOptions, responseListener)
     }
 }
-
-
