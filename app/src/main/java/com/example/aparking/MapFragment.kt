@@ -17,7 +17,9 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.Toast
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.toBitmap
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -262,12 +264,13 @@ class MapFragment : Fragment(), Session.SearchListener, DrivingRouteListener {
         for (child in searchResult) {
             child.obj?.geometry?.let {
                 // Add a placemark on the map for the first search result.
-                val placemark = it[0].point?.let { it1 -> map.mapObjects.addPlacemark(it1) }
-                val imageProvider = ImageProvider.fromResource(
-                    requireContext(),
-                    R.drawable.search_result
+                val imageProvider = ImageProvider.fromBitmap(
+                    AppCompatResources.getDrawable(
+                        requireContext(),
+                        R.drawable.ic_search_result
+                    )!!.toBitmap(90, 75)
                 )
-                placemark?.setIcon(imageProvider)
+                it[0].point?.let { it1 -> mapObjects.addPlacemark(it1, imageProvider) }
             }
         }
         destinationPoint = searchResult[0].obj?.geometry?.firstOrNull()?.point
