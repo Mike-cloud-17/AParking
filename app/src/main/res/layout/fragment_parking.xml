@@ -4,7 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    android:paddingBottom="20dp">
+    android:paddingStart="3dp"
+    android:paddingEnd="3dp"
+    android:paddingTop="10dp"
+    android:paddingBottom="35dp">
 
     <!-- Кнопка построения маршрута -->
 
@@ -13,6 +16,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_route"
+        android:background="@color/white"
         app:layout_constraintBottom_toBottomOf="@id/carNumberLayout"
         app:layout_constraintTop_toTopOf="@id/carNumberLayout"
         app:layout_constraintEnd_toStartOf="@+id/carNumberLayout"
@@ -24,12 +28,13 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:maxLines="2"
-        android:layout_marginTop="1dp"
-        android:layout_marginBottom="3dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
         android:ellipsize="end"
         android:gravity="center"
-        android:text="Маршрут до ближайшей стоянки"
-        app:layout_constraintBottom_toTopOf="@id/parkingButton"
+        android:text="Маршрут до ближ. парковки"
+        android:textSize="11sp"
+        app:layout_constraintBottom_toTopOf="@id/parking_button"
         app:layout_constraintEnd_toEndOf="@id/routeButton"
         app:layout_constraintStart_toStartOf="@id/routeButton" />
 
@@ -38,10 +43,14 @@
     <LinearLayout
         android:id="@+id/carNumberLayout"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:background="@drawable/search"
         android:gravity="center"
         android:orientation="horizontal"
+        android:paddingTop="7dp"
+        android:paddingBottom="7dp"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
         app:layout_constraintTop_toTopOf="@id/locationButton"
         app:layout_constraintBottom_toBottomOf="@id/locationButton"
         app:layout_constraintEnd_toStartOf="@id/locationButton"
@@ -50,17 +59,18 @@
         <ImageView
             android:id="@+id/flagImage"
             android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_height="15dp"
             android:src="@drawable/ic_flag_kz" />
 
         <TextView
             android:id="@+id/carNumber"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:text="KZ  777 KNS | 02"
+            android:textSize="20sp"
             android:gravity="center"
             android:textColor="@color/black"
-            android:layout_marginEnd="7dp" />
+            android:layout_marginEnd="10dp" />
 
         <ImageView
             android:id="@+id/dropdownButton"
@@ -75,14 +85,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:maxLines="2"
-        android:layout_marginTop="1dp"
-        android:layout_marginBottom="3dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
         android:ellipsize="end"
         android:text="Мой автомобиль"
+        android:textSize="11sp"
         app:layout_constraintTop_toBottomOf="@id/carNumberLayout"
         app:layout_constraintEnd_toEndOf="@id/carNumberLayout"
         app:layout_constraintStart_toStartOf="@id/carNumberLayout"
-        app:layout_constraintBottom_toTopOf="@id/parkingButton"/>
+        app:layout_constraintBottom_toTopOf="@id/parking_button"/>
 
     <!-- Кнопка для отображения текущего местоположения -->
 
@@ -91,6 +102,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_location"
+        android:background="@color/white"
         app:layout_constraintBottom_toTopOf="@id/locationButtonLabel"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/carNumberLayout" />
@@ -99,28 +111,45 @@
         android:id="@+id/locationButtonLabel"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="1dp"
-        android:layout_marginBottom="3dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
         android:ellipsize="end"
         android:maxLines="2"
         android:text="Текущее местоположение"
-        android:gravity="center"
-        app:layout_constraintBottom_toTopOf="@id/parkingButton"
+        android:textSize="11sp"
+        app:layout_constraintBottom_toTopOf="@id/parking_button"
         app:layout_constraintEnd_toEndOf="@id/locationButton"
         app:layout_constraintStart_toStartOf="@id/locationButton" />
 
     <!-- Кнопка для начала парковки -->
 
-    <Button
-        android:id="@+id/parkingButton"
+    <LinearLayout
+        android:id="@+id/parking_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="#FFFF00"
-        android:text="🅿️ Начинаю парковаться"
-        android:textColor="#000000"
-        android:textStyle="bold"
+        android:background="@drawable/rounded_button"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:clickable="true"
+        android:focusable="true"
+        android:padding="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_parking_symbol"
+            android:layout_marginEnd="10dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Начинаю парковаться"
+            android:textColor="#000000"
+            android:textSize="18sp"/>
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
