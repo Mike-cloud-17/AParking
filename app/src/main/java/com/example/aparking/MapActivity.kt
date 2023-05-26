@@ -7,9 +7,18 @@ import android.view.MenuItem
 import com.google.android.material.navigation.NavigationView
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.core.view.GravityCompat
+import androidx.fragment.app.Fragment
 import com.yandex.mapkit.MapKitFactory
 
-class MapActivity : AppCompatActivity() {
+// Интерфейс для взаимодействия между вашими фрагментами и активностью
+interface MapActivityInteraction {
+    fun onRouteBuildRequested()
+    fun onLocationUpdateRequested()
+    fun onParkingSpotClicked()
+    fun onParkingStartClicked()
+}
+
+class MapActivity : AppCompatActivity(), MapActivityInteraction {
 
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var toggle: ActionBarDrawerToggle
@@ -20,6 +29,9 @@ class MapActivity : AppCompatActivity() {
         MapKitFactory.setApiKey("68729688-2101-4bda-8ee8-58be30117867")
         MapKitFactory.initialize(this)
         setContentView(R.layout.activity_map)
+
+        // Прячем верхнюю панель (ActionBar)
+        supportActionBar?.hide()
 
         drawerLayout = findViewById(R.id.drawer_layout)
         val navigationView = findViewById<NavigationView>(R.id.nav_view)
@@ -55,7 +67,13 @@ class MapActivity : AppCompatActivity() {
         // Запустить MapFragment
         supportFragmentManager
             .beginTransaction()
-            .replace(R.id.fragment_container, MapFragment())
+            .replace(R.id.map_fragment_container, MapFragment())
+            .commit()
+
+        // Запустить ParkingFragment
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.parking_fragment_container, ParkingFragment())
             .commit()
     }
 
@@ -69,5 +87,30 @@ class MapActivity : AppCompatActivity() {
 
     fun getDrawerLayout(): DrawerLayout {
         return drawerLayout
+    }
+
+    override fun onRouteBuildRequested() {
+        // обновить карту с новым маршрутом
+    }
+
+    override fun onLocationUpdateRequested() {
+        // обновить положение пользователя на карте
+    }
+
+    override fun onParkingSpotClicked() {
+        // заменить нижний фрагмент на ParkingSpotInfoFragment
+//        replaceBottomSheetFragment(ParkingSpotInfoFragment())
+    }
+
+    override fun onParkingStartClicked() {
+        // заменить нижний фрагмент на ParkingSelectionFragment
+//        replaceBottomSheetFragment(ParkingSelectionFragment())
+    }
+
+    private fun replaceBottomSheetFragment(fragment: Fragment) {
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.parking_fragment_container, fragment)
+            .commit()
     }
 }

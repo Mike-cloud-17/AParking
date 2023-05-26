@@ -1,13 +1,26 @@
-<?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/nav_profile"
+    <item
+        android:id="@+id/nav_profile"
+        android:icon="@drawable/ic_profile"
         android:title="Профиль" />
-    <item android:id="@+id/nav_map"
+
+    <item
+        android:id="@+id/nav_map"
+        android:icon="@drawable/ic_map"
         android:title="Карта парковок" />
-    <item android:id="@+id/nav_cars"
+
+    <item
+        android:id="@+id/nav_cars"
+        android:icon="@drawable/ic_my_cars"
         android:title="Мои автомобили" />
-    <item android:id="@+id/nav_settings"
+
+    <item
+        android:id="@+id/nav_settings"
+        android:icon="@drawable/ic_settings"
         android:title="Настройки" />
-    <item android:id="@+id/nav_about"
+
+    <item
+        android:id="@+id/nav_about"
+        android:icon="@drawable/ic_info"
         android:title="О нас" />
 </menu>
