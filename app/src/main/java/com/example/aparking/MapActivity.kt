@@ -4,21 +4,17 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
+import androidx.activity.viewModels
 import com.google.android.material.navigation.NavigationView
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import com.yandex.mapkit.MapKitFactory
+import com.yandex.mapkit.directions.DirectionsFactory
+import com.yandex.mapkit.transport.TransportFactory
 
-// Интерфейс для взаимодействия между вашими фрагментами и активностью
-interface MapActivityInteraction {
-    fun onRouteBuildRequested()
-    fun onLocationUpdateRequested()
-    fun onParkingSpotClicked()
-    fun onParkingStartClicked()
-}
-
-class MapActivity : AppCompatActivity(), MapActivityInteraction {
+class MapActivity : AppCompatActivity() {
+    private val viewModel: MapViewModel by viewModels()
 
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var toggle: ActionBarDrawerToggle
@@ -28,6 +24,7 @@ class MapActivity : AppCompatActivity(), MapActivityInteraction {
 
         MapKitFactory.setApiKey("68729688-2101-4bda-8ee8-58be30117867")
         MapKitFactory.initialize(this)
+        DirectionsFactory.initialize(this)
         setContentView(R.layout.activity_map)
 
         // Прячем верхнюю панель (ActionBar)
@@ -87,24 +84,6 @@ class MapActivity : AppCompatActivity(), MapActivityInteraction {
 
     fun getDrawerLayout(): DrawerLayout {
         return drawerLayout
-    }
-
-    override fun onRouteBuildRequested() {
-        // обновить карту с новым маршрутом
-    }
-
-    override fun onLocationUpdateRequested() {
-        // обновить положение пользователя на карте
-    }
-
-    override fun onParkingSpotClicked() {
-        // заменить нижний фрагмент на ParkingSpotInfoFragment
-//        replaceBottomSheetFragment(ParkingSpotInfoFragment())
-    }
-
-    override fun onParkingStartClicked() {
-        // заменить нижний фрагмент на ParkingSelectionFragment
-//        replaceBottomSheetFragment(ParkingSelectionFragment())
     }
 
     private fun replaceBottomSheetFragment(fragment: Fragment) {

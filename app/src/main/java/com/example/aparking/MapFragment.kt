@@ -20,29 +20,46 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import com.yandex.mapkit.*
+import com.yandex.mapkit.directions.DirectionsFactory
+import com.yandex.mapkit.directions.driving.DrivingOptions
+import com.yandex.mapkit.directions.driving.DrivingRoute
+import com.yandex.mapkit.directions.driving.DrivingRouter
+import com.yandex.mapkit.directions.driving.DrivingSession
+import com.yandex.mapkit.directions.driving.DrivingSession.DrivingRouteListener
+import com.yandex.mapkit.directions.driving.VehicleOptions
 import com.yandex.mapkit.geometry.Geometry
 import com.yandex.mapkit.geometry.Point
 import com.yandex.mapkit.map.*
 import com.yandex.mapkit.map.Map
 import com.yandex.mapkit.mapview.MapView
 import com.yandex.mapkit.search.*
+import com.yandex.mapkit.transport.TransportFactory
+import com.yandex.mapkit.transport.masstransit.MasstransitRouter
 import com.yandex.mapkit.user_location.UserLocationLayer
 import com.yandex.runtime.Error
 import com.yandex.runtime.image.ImageProvider
 import com.yandex.runtime.network.NetworkError
 import com.yandex.runtime.network.RemoteError
 
-class MapFragment : Fragment() {
+
+class MapFragment : Fragment(), Session.SearchListener, DrivingRouteListener {
+    private val viewModel: MapViewModel by activityViewModels()
     private lateinit var mapView: MapView
     private val map: Map
         get() = mapView.map
     private lateinit var trafficButton: Button
     private val mapKit = MapKitFactory.getInstance()
     private var currentLocation: Point? = null
+    private var destinationPoint: Point? = null
 
     private lateinit var locationMapKit: UserLocationLayer
     private lateinit var searchEdit: EditText
+    private lateinit var searchManager: SearchManager
+    private lateinit var mapObjects: MapObjectCollection
+    private lateinit var drivingRouter: DrivingRouter
+    private lateinit var drivingSession: DrivingSession
 
     private val LOCATION_PERMISSION_REQUEST_CODE = 1
     private val LOCATION_PERMISSIONS = arrayOf(
@@ -62,6 +79,11 @@ class MapFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         mapView = view.findViewById(R.id.mapview)
+        mapObjects = mapView.map.mapObjects
+
+        searchManager =
+            SearchFactory.getInstance().createSearchManager(SearchManagerType.COMBINED)
+        drivingRouter = DirectionsFactory.getInstance().createDrivingRouter()
 
         // Отображение пробок
         trafficButton = view.findViewById(R.id.trafficbutton)
@@ -123,6 +145,8 @@ class MapFragment : Fragment() {
         } else {
             requestLocationPermission()
         }
+
+        viewModel.getShowRouteLiveData().observe(viewLifecycleOwner, this::showRoute)
     }
 
     private fun hasLocationPermission(): Boolean {
@@ -218,36 +242,7 @@ class MapFragment : Fragment() {
     }
 
     private fun performSearch(query: String) {
-        val searchManager =
-            SearchFactory.getInstance().createSearchManager(SearchManagerType.COMBINED)
         val searchOptions = SearchOptions()
-
-        val responseListener = object : Session.SearchListener {
-            override fun onSearchResponse(results: Response) {
-                val searchResult = results.collection.children.firstOrNull()?.obj
-                searchResult?.geometry?.let {
-                    // Add a placemark on the map for the first search result.
-                    val placemark = it[0].point?.let { it1 -> map.mapObjects.addPlacemark(it1) }
-                    val imageProvider = ImageProvider.fromResource(
-                        view!!.context,
-                        R.drawable.search_result
-                    )
-                    placemark?.setIcon(imageProvider)
-                }
-            }
-
-            override fun onSearchError(error: Error) {
-                // Handle error.
-                Log.e("YandexMapKit", "Search error: $error")
-                var errorMessage = "Неизвестная ошибка"
-                if (error is RemoteError) {
-                    errorMessage = "Беспроводная ошибка"
-                } else if (error is NetworkError) {
-                    errorMessage = "Проблема с интернетом"
-                }
-                Toast.makeText(requireContext(), errorMessage, Toast.LENGTH_SHORT).show()
-            }
-        }
 
         // Use the current location as the geometry for the search, if available.
         val geometry = currentLocation?.let { Geometry.fromPoint(it) }
@@ -258,6 +253,70 @@ class MapFragment : Fragment() {
                 )
             ) // Fallback to (0, 0) if current location is not available.
 
-        searchManager.submit(query, geometry, searchOptions, responseListener)
+        searchManager.submit(query, geometry, searchOptions, this)
+    }
+
+    override fun onSearchResponse(results: Response) {
+        mapObjects.clear()
+        val searchResult = results.collection.children
+        for (child in searchResult) {
+            child.obj?.geometry?.let {
+                // Add a placemark on the map for the first search result.
+                val placemark = it[0].point?.let { it1 -> map.mapObjects.addPlacemark(it1) }
+                val imageProvider = ImageProvider.fromResource(
+                    requireContext(),
+                    R.drawable.search_result
+                )
+                placemark?.setIcon(imageProvider)
+            }
+        }
+        destinationPoint = searchResult[0].obj?.geometry?.firstOrNull()?.point
+    }
+
+    private fun showRoute(value: Boolean) {
+        if (value && currentLocation != null && destinationPoint != null)
+            requestRoutes(currentLocation!!, destinationPoint!!)
+    }
+
+    override fun onSearchError(error: Error) {
+        // Handle error.
+        Log.e("YandexMapKit", "Search error: $error")
+        var errorMessage = "Неизвестная ошибка"
+        if (error is RemoteError) {
+            errorMessage = "Беспроводная ошибка"
+        } else if (error is NetworkError) {
+            errorMessage = "Проблема с интернетом"
+        }
+        Toast.makeText(requireContext(), errorMessage, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun requestRoutes(start: Point, end: Point) {
+        val drivingOptions = DrivingOptions()
+        val vehicleOptions = VehicleOptions()
+        val requestPoints: ArrayList<RequestPoint> = ArrayList()
+        requestPoints.add(
+            RequestPoint(
+                start,
+                RequestPointType.WAYPOINT,
+                null
+            )
+        )
+        requestPoints.add(
+            RequestPoint(
+                end,
+                RequestPointType.WAYPOINT,
+                null
+            )
+        )
+        drivingSession =
+            drivingRouter.requestRoutes(requestPoints, drivingOptions, vehicleOptions, this)
+    }
+
+    override fun onDrivingRoutes(routes: MutableList<DrivingRoute>) {
+        mapObjects.addPolyline(routes[0].geometry)
+    }
+
+    override fun onDrivingRoutesError(p0: Error) {
+        TODO("Not yet implemented")
     }
 }

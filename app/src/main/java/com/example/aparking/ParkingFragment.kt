@@ -5,20 +5,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 
 class ParkingFragment : Fragment() {
-
-    private var interaction: MapActivityInteraction? = null
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        if (context is MapActivityInteraction) {
-            interaction = context
-        } else {
-            throw RuntimeException("$context must implement MapActivityInteraction")
-        }
-    }
+    private val viewModel: MapViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,4 +23,11 @@ class ParkingFragment : Fragment() {
 
     // Обработка взаимодействий пользователя здесь...
     // например, при нажатии на кнопку "построить маршрут" вызываем interaction?.onRouteBuildRequested()
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        view.findViewById<ImageButton>(R.id.routeButton).setOnClickListener {
+            viewModel.showRoute()
+        }
+    }
 }
