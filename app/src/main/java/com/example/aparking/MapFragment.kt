@@ -44,22 +44,27 @@ import com.yandex.runtime.Error
 import com.yandex.runtime.image.ImageProvider
 import com.yandex.runtime.network.NetworkError
 import com.yandex.runtime.network.RemoteError
+import com.yandex.runtime.ui_view.ViewProvider
+import kotlin.random.Random
 
 
-class MapFragment : Fragment(), Session.SearchListener, DrivingRouteListener {
+class MapFragment : Fragment(), Session.SearchListener, DrivingRouteListener, ClusterListener {
     private val viewModel: MapViewModel by activityViewModels()
     private lateinit var mapView: MapView
     private val map: Map
         get() = mapView.map
     private lateinit var trafficButton: Button
+    private lateinit var parkingSpots: List<ParkingSpot>
     private val mapKit = MapKitFactory.getInstance()
     private var currentLocation: Point? = null
     private var destinationPoint: Point? = null
+    private var searchResult: List<Point>? = null
 
     private lateinit var locationMapKit: UserLocationLayer
     private lateinit var searchEdit: EditText
     private lateinit var searchManager: SearchManager
     private lateinit var mapObjects: MapObjectCollection
+    private lateinit var clustersCollection: ClusterizedPlacemarkCollection
     private lateinit var drivingRouter: DrivingRouter
     private lateinit var drivingSession: DrivingSession
 
@@ -82,6 +87,7 @@ class MapFragment : Fragment(), Session.SearchListener, DrivingRouteListener {
 
         mapView = view.findViewById(R.id.mapview)
         mapObjects = mapView.map.mapObjects
+        parkingSpots = ParkingSpotsRepository().getParkingSpots()
 
         searchManager =
             SearchFactory.getInstance().createSearchManager(SearchManagerType.COMBINED)
@@ -148,7 +154,10 @@ class MapFragment : Fragment(), Session.SearchListener, DrivingRouteListener {
             requestLocationPermission()
         }
 
+        showMapObjects()
+
         viewModel.getShowRouteLiveData().observe(viewLifecycleOwner, this::showRoute)
+        viewModel.getShowCurrentLocationLiveData().observe(viewLifecycleOwner, this::showCurrentLocation)
     }
 
     private fun hasLocationPermission(): Boolean {
@@ -178,12 +187,12 @@ class MapFragment : Fragment(), Session.SearchListener, DrivingRouteListener {
         }
 
         val location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
-        currentLocation = location?.let { Point(it.latitude, location.longitude) }
+        currentLocation = location?.let { Point(it.latitude, it.longitude) }
 
         currentLocation?.let { CameraPosition(it, 15.0f, 0.0f, 0.0f) }?.let {
             map.move(
                 it,
-                Animation(Animation.Type.SMOOTH, 8f),
+                Animation(Animation.Type.SMOOTH, .5f),
                 null
             )
         }
@@ -191,12 +200,7 @@ class MapFragment : Fragment(), Session.SearchListener, DrivingRouteListener {
         val locationListener = object : LocationListener {
             override fun onLocationChanged(location: Location) {
                 Log.d("LocationUpdates", "Location has changed!")
-                val currentLocation = Point(location.latitude, location.longitude)
-                map.move(
-                    CameraPosition(currentLocation, 15.0f, 0.0f, 0.0f),
-                    Animation(Animation.Type.SMOOTH, 10f),
-                    null
-                )
+                currentLocation = Point(location.latitude, location.longitude)
             }
 
             override fun onStatusChanged(provider: String, status: Int, extras: Bundle) {}
@@ -260,25 +264,65 @@ class MapFragment : Fragment(), Session.SearchListener, DrivingRouteListener {
 
     override fun onSearchResponse(results: Response) {
         mapObjects.clear()
-        val searchResult = results.collection.children
-        for (child in searchResult) {
-            child.obj?.geometry?.let {
-                // Add a placemark on the map for the first search result.
+        searchResult = results.collection.children.mapNotNull { it.obj?.geometry?.firstOrNull()?.point }
+        showMapObjects()
+        destinationPoint = searchResult?.firstOrNull()
+        destinationPoint?.let {
+            map.move(
+                CameraPosition(it, 15.0f, 0.0f, 0.0f),
+                Animation(Animation.Type.SMOOTH, .5f),
+                null
+            )
+        }
+    }
+
+    private fun showMapObjects() {
+        mapObjects.clear()
+        searchResult?.let {
+            for (child in it) {
                 val imageProvider = ImageProvider.fromBitmap(
                     AppCompatResources.getDrawable(
                         requireContext(),
                         R.drawable.ic_search_result
                     )!!.toBitmap(90, 75)
                 )
-                it[0].point?.let { it1 -> mapObjects.addPlacemark(it1, imageProvider) }
+                child.let { it1 -> mapObjects.addPlacemark(it1, imageProvider) }
             }
         }
-        destinationPoint = searchResult[0].obj?.geometry?.firstOrNull()?.point
+
+        clustersCollection = mapObjects.addClusterizedPlacemarkCollection(this)
+        for (spot in parkingSpots) {
+            if (spot.latitude != null && spot.longitude != null)
+                drawSpot(spot)
+        }
+        clustersCollection.clusterPlacemarks(60.0, 15)
+    }
+
+    private fun drawSpot(spot: ParkingSpot) {
+        val imageProvider = ImageProvider.fromBitmap(
+            AppCompatResources.getDrawable(
+                requireContext(),
+                R.drawable.ic_parking_24
+            )!!.toBitmap(90, 90)
+        )
+        val location = Point(spot.latitude!!, spot.longitude!!)
+        clustersCollection.addPlacemark(location, imageProvider)
     }
 
     private fun showRoute(value: Boolean) {
         if (value && currentLocation != null && destinationPoint != null)
             requestRoutes(currentLocation!!, destinationPoint!!)
+        else if (!value)
+            showMapObjects()
+    }
+
+    private fun showCurrentLocation(value: Boolean) {
+        if (value && currentLocation != null)
+            map.move(
+                CameraPosition(currentLocation!!, 15.0f, 0.0f, 0.0f),
+                Animation(Animation.Type.SMOOTH, .5f),
+                null
+            )
     }
 
     override fun onSearchError(error: Error) {
@@ -321,5 +365,15 @@ class MapFragment : Fragment(), Session.SearchListener, DrivingRouteListener {
 
     override fun onDrivingRoutesError(p0: Error) {
         TODO("Not yet implemented")
+    }
+
+    override fun onClusterAdded(cluster: Cluster) {
+        val view = ClusterCircleView(requireContext())
+        view.setText(cluster.size.toString())
+        view.setColor(Random.nextInt(3))
+        cluster.appearance.setView(ViewProvider(view))
+        cluster.addClusterTapListener {
+            true
+        }
     }
 }

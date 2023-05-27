@@ -15,6 +15,7 @@ import androidx.fragment.app.activityViewModels
 
 class ParkingFragment : Fragment() {
     private val viewModel: MapViewModel by activityViewModels()
+    private var routeDisabled = true
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,8 +30,17 @@ class ParkingFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        view.findViewById<ImageButton>(R.id.routeButton).setOnClickListener {
-            viewModel.showRoute()
+        view.findViewById<ImageButton>(R.id.routeButton).let {button ->
+            button.setOnClickListener {
+                viewModel.showRoute(routeDisabled)
+                button.setImageResource(
+                    if (routeDisabled) R.drawable.ic_delete_route else R.drawable.ic_route
+                )
+                routeDisabled = !routeDisabled
+            }
+        }
+        view.findViewById<ImageButton>(R.id.locationButton).setOnClickListener {
+            viewModel.showCurrentLocation()
         }
     }
 }
