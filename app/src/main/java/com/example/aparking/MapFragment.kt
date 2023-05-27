@@ -390,7 +390,8 @@ class MapFragment : Fragment(), Session.SearchListener, DrivingRouteListener, Cl
     }
 
     override fun onDrivingRoutes(routes: MutableList<DrivingRoute>) {
-        mapObjects.addPolyline(routes[0].geometry)
+        if (routes.isNotEmpty())
+            mapObjects.addPolyline(routes[0].geometry)
     }
 
     override fun onDrivingRoutesError(p0: Error) {
