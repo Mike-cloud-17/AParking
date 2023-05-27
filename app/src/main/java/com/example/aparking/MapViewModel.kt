@@ -10,6 +10,5 @@ class MapViewModel : ViewModel() {
         showRouteLiveData.postValue(true)
     }
 
-
     fun getShowRouteLiveData() = showRouteLiveData
 }
