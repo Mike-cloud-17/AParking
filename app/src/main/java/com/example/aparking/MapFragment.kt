@@ -37,8 +37,6 @@ import com.yandex.mapkit.map.*
 import com.yandex.mapkit.map.Map
 import com.yandex.mapkit.mapview.MapView
 import com.yandex.mapkit.search.*
-import com.yandex.mapkit.transport.TransportFactory
-import com.yandex.mapkit.transport.masstransit.MasstransitRouter
 import com.yandex.mapkit.user_location.UserLocationLayer
 import com.yandex.runtime.Error
 import com.yandex.runtime.image.ImageProvider
@@ -302,7 +300,10 @@ class MapFragment : Fragment(), Session.SearchListener, DrivingRouteListener, Cl
         val imageProvider = ImageProvider.fromBitmap(
             AppCompatResources.getDrawable(
                 requireContext(),
-                R.drawable.ic_parking_24
+                if (spot.isOccupied == null || spot.isOccupied!!)
+                    R.drawable.ic_parking_red
+                else
+                    R.drawable.ic_parking_green
             )!!.toBitmap(90, 90)
         )
         val location = Point(spot.latitude!!, spot.longitude!!)
@@ -310,8 +311,23 @@ class MapFragment : Fragment(), Session.SearchListener, DrivingRouteListener, Cl
     }
 
     private fun showRoute(value: Boolean) {
-        if (value && currentLocation != null && destinationPoint != null)
-            requestRoutes(currentLocation!!, destinationPoint!!)
+        if (value && currentLocation != null) {
+            if (destinationPoint != null)
+                requestRoutes(currentLocation!!, destinationPoint!!)
+            else {
+                val closestSpot = parkingSpots
+                    .filter { it.distanceToSpot != null }
+                    .minByOrNull { it.distanceToSpot!! }?.let {
+                        if (it.latitude != null && it.longitude != null)
+                            Point(it.latitude, it.longitude)
+                        else
+                            null
+                    }
+                closestSpot?.let {
+                    requestRoutes(currentLocation!!, it)
+                }
+            }
+        }
         else if (!value)
             showMapObjects()
     }
