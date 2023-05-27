@@ -326,7 +326,7 @@ class MapFragment : Fragment(), Session.SearchListener, DrivingRouteListener, Cl
 
     private fun showRoute(value: Boolean) {
         if (value && currentLocation != null) {
-            if (destinationPoint != null) {
+            if (destinationPoint != null && searchEdit.text.toString().isNotBlank()) {
                 if (query == "покровский бульвар, 11с1")
                     requestRoutes(currentLocation!!, closestMoscowSpot.let {
                         Point(it.latitude!!, it.longitude!!)
