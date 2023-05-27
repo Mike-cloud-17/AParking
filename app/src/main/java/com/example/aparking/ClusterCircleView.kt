@@ -1,6 +1,7 @@
 package com.example.aparking
 
 import android.content.Context
+import android.graphics.Color
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -23,11 +24,11 @@ class ClusterCircleView
         binding.number.text = text
     }
 
-    fun setColor(value: Int) {
-        when (value) {
-            0 -> binding.root.setBackgroundResource(R.drawable.cluster_circle_green)
-            1 -> binding.root.setBackgroundResource(R.drawable.cluster_circle_yellow)
-            2 -> binding.root.setBackgroundResource(R.drawable.cluster_circle_red)
+    fun setColor(color: Int) {
+        when (color) {
+            Color.GREEN -> binding.root.setBackgroundResource(R.drawable.cluster_circle_green)
+            Color.YELLOW -> binding.root.setBackgroundResource(R.drawable.cluster_circle_yellow)
+            Color.RED -> binding.root.setBackgroundResource(R.drawable.cluster_circle_red)
         }
     }
 }

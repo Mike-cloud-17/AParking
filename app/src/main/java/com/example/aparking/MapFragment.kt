@@ -4,6 +4,7 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
@@ -43,6 +44,7 @@ import com.yandex.runtime.image.ImageProvider
 import com.yandex.runtime.network.NetworkError
 import com.yandex.runtime.network.RemoteError
 import com.yandex.runtime.ui_view.ViewProvider
+import java.util.TreeMap
 import kotlin.random.Random
 
 
@@ -52,7 +54,7 @@ class MapFragment : Fragment(), Session.SearchListener, DrivingRouteListener, Cl
     private val map: Map
         get() = mapView.map
     private lateinit var trafficButton: Button
-    private lateinit var parkingSpots: List<ParkingSpot>
+    private var parkingSpots: MutableMap<ComparablePoint, ParkingSpot> = TreeMap()
     private val mapKit = MapKitFactory.getInstance()
     private var currentLocation: Point? = null
     private var destinationPoint: Point? = null
@@ -93,7 +95,11 @@ class MapFragment : Fragment(), Session.SearchListener, DrivingRouteListener, Cl
 
         mapView = view.findViewById(R.id.mapview)
         mapObjects = mapView.map.mapObjects
-        parkingSpots = ParkingSpotsRepository().getParkingSpots()
+        ParkingSpotsRepository()
+            .getParkingSpots()
+            .forEach {
+                parkingSpots[ComparablePoint(it.latitude!!, it.longitude!!)] = it
+            }
 
         searchManager =
             SearchFactory.getInstance().createSearchManager(SearchManagerType.COMBINED)
@@ -299,8 +305,7 @@ class MapFragment : Fragment(), Session.SearchListener, DrivingRouteListener, Cl
         clustersCollection = mapObjects.addClusterizedPlacemarkCollection(this)
         drawSpot(closestMoscowSpot)
         for (spot in parkingSpots) {
-            if (spot.latitude != null && spot.longitude != null)
-                drawSpot(spot)
+            drawSpot(spot.value)
         }
         clustersCollection.clusterPlacemarks(60.0, 15)
     }
@@ -330,15 +335,10 @@ class MapFragment : Fragment(), Session.SearchListener, DrivingRouteListener, Cl
                     requestRoutes(currentLocation!!, destinationPoint!!)
             } else {
                 val closestSpot = parkingSpots
-                    .filter { it.distanceToSpot != null }
-                    .minByOrNull { it.distanceToSpot!! }?.let {
-                        if (it.latitude != null && it.longitude != null)
-                            Point(it.latitude, it.longitude)
-                        else
-                            null
-                    }
+                                .filter { it.value.distanceToSpot != null }
+                                .minByOrNull { it.value.distanceToSpot!! }?.key
                 closestSpot?.let {
-                    requestRoutes(currentLocation!!, it)
+                    requestRoutes(currentLocation!!, it.toPoint())
                 }
             }
         }
@@ -398,9 +398,16 @@ class MapFragment : Fragment(), Session.SearchListener, DrivingRouteListener, Cl
     }
 
     override fun onClusterAdded(cluster: Cluster) {
+        val spots = cluster.placemarks.map { parkingSpots[ComparablePoint.fromPoint(it.geometry)] }
+        val compareResult = spots.count { it?.isOccupied!! }.compareTo(spots.size / 2.0)
         val view = ClusterCircleView(requireContext())
         view.setText(cluster.size.toString())
-        view.setColor(Random.nextInt(3))
+        if (compareResult < 0)
+            view.setColor(Color.RED)
+        else if (compareResult == 0)
+            view.setColor(Color.YELLOW)
+        else
+            view.setColor(Color.GREEN)
         cluster.appearance.setView(ViewProvider(view))
         cluster.addClusterTapListener {
             true
