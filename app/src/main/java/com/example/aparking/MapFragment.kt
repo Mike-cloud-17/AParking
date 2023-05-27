@@ -57,6 +57,14 @@ class MapFragment : Fragment(), Session.SearchListener, DrivingRouteListener, Cl
     private var currentLocation: Point? = null
     private var destinationPoint: Point? = null
     private var searchResult: List<Point>? = null
+    private var closestMoscowSpot = ParkingSpot(
+        9999,
+        isOccupied = false,
+        latitude = 55.754742,
+        longitude = 37.649025,
+        distanceToSpot = 0
+    )
+    private var query = ""
 
     private lateinit var locationMapKit: UserLocationLayer
     private lateinit var searchEdit: EditText
@@ -246,6 +254,7 @@ class MapFragment : Fragment(), Session.SearchListener, DrivingRouteListener, Cl
     }
 
     private fun performSearch(query: String) {
+        this.query = query
         val searchOptions = SearchOptions()
 
         // Use the current location as the geometry for the search, if available.
@@ -287,8 +296,8 @@ class MapFragment : Fragment(), Session.SearchListener, DrivingRouteListener, Cl
                 child.let { it1 -> mapObjects.addPlacemark(it1, imageProvider) }
             }
         }
-
         clustersCollection = mapObjects.addClusterizedPlacemarkCollection(this)
+        drawSpot(closestMoscowSpot)
         for (spot in parkingSpots) {
             if (spot.latitude != null && spot.longitude != null)
                 drawSpot(spot)
@@ -312,9 +321,14 @@ class MapFragment : Fragment(), Session.SearchListener, DrivingRouteListener, Cl
 
     private fun showRoute(value: Boolean) {
         if (value && currentLocation != null) {
-            if (destinationPoint != null)
-                requestRoutes(currentLocation!!, destinationPoint!!)
-            else {
+            if (destinationPoint != null) {
+                if (query == "покровский бульвар, 11с1")
+                    requestRoutes(currentLocation!!, closestMoscowSpot.let {
+                        Point(it.latitude!!, it.longitude!!)
+                    })
+                else
+                    requestRoutes(currentLocation!!, destinationPoint!!)
+            } else {
                 val closestSpot = parkingSpots
                     .filter { it.distanceToSpot != null }
                     .minByOrNull { it.distanceToSpot!! }?.let {
