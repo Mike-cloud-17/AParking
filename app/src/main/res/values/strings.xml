@@ -3,4 +3,12 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="open">Открыть меню</string>
     <string name="close">Закрыть меню</string>
+    <string name="sessions_header">Парковочные сессии</string>
+    <string name="current_session_date">06.05.2023</string>
+    <string name="current_session_header">Текущая сессия</string>
+    <string name="current_parking_time">Парковочное время</string>
+    <string name="current_session_time">01:26:23</string>
+    <string name="parking_place">Парковочное место</string>
+    <string name="my_car">Мой автомобиль</string>
+    <string name="parking_address">Адрес парковки</string>
 </resources>
