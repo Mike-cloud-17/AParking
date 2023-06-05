@@ -11,4 +11,6 @@
     <string name="parking_place">Парковочное место</string>
     <string name="my_car">Мой автомобиль</string>
     <string name="parking_address">Адрес парковки</string>
+    <string name="parking_time">Время стоянки</string>
+    <string name="purchase">Оплатить</string>
 </resources>
