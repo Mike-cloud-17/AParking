@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/holder_rounded_white"
-    android:paddingVertical="20dp"
+    android:background="@drawable/holder_rounded_gray"
+    android:paddingTop="20dp"
     android:orientation="vertical">
     <TextView
         android:id="@+id/session_date"
@@ -16,7 +16,36 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/bottom_border_white"
+        android:background="@drawable/bottom_border_yellow_reverse"
+        android:paddingVertical="20dp"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingHorizontal="20dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/purchased"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:layout_marginBottom="10dp"/>
+            <TextView
+                android:id="@+id/price"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="305.00"
+                android:textColor="@color/black"
+                android:textAlignment="viewEnd"
+                android:textSize="20sp"/>
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bottom_border_yellow_reverse"
         android:paddingVertical="20dp"
         android:orientation="vertical">
         <TextView
@@ -55,7 +84,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/bottom_border_white"
+        android:background="@drawable/bottom_border_yellow_reverse"
         android:paddingVertical="20dp"
         android:orientation="vertical">
 
@@ -108,8 +137,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/bottom_border_white"
-        android:paddingVertical="20dp"
+        android:paddingTop="20dp"
         android:orientation="vertical">
         <TextView
             android:layout_width="wrap_content"
@@ -143,29 +171,9 @@
                 android:textSize="20sp"/>
         </LinearLayout>
     </LinearLayout>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/debt"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        android:textSize="20sp"
-        android:layout_marginStart="20dp"
-        android:layout_marginVertical="20dp"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="289.64"
-        android:textColor="@color/red"
-        android:textStyle="bold"
-        android:textSize="20sp"
-        android:layout_marginStart="20dp"
-        android:layout_marginBottom="20dp"/>
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="20dp"
-        android:textColor="@color/black"
-        android:background="@drawable/rounded_button"
-        android:text="@string/purchase" />
+    <ImageView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/ic_arrow_up_24"
+        android:layout_gravity="center_horizontal"/>
 </LinearLayout>
