@@ -25,7 +25,7 @@ class RegistrationActivity : AppCompatActivity() {
             val enteredCarNumber = carNumber.text.toString()
 
             // Регистрируем нового пользователя (в этом примере мы просто сравниваем введенные данные с определенными значениями для демонстрации)
-            if (enteredName == "Михаил" && enteredSurname == "Шкляр" && enteredBirthdate == "17.07.2001" && enteredCarNumber == "753ATR18") {
+            if (enteredName == "Михаил" && enteredSurname == "Шкляр" && enteredBirthdate == "17.07.2001" && enteredCarNumber == "777KNS02") {
                 // Переход к экрану успешного входа
                 val intent = Intent(this, SuccessfulLoginActivity::class.java)
                 startActivity(intent)

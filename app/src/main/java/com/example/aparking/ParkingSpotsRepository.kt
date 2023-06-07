@@ -12,15 +12,17 @@ class ParkingSpotsRepository {
     private fun generateSpots(): Unit {
         val latRange = 43.21..43.30
         val lonRange = 76.85..77.03
+        val alphabet = ('A'..'Z').toList()
         for (i in 0 until 1000) {
             val latitude = Random.nextDouble(latRange.start, latRange.endInclusive)
             val longitude = Random.nextDouble(lonRange.start, lonRange.endInclusive)
             val isOccupied = Random.nextBoolean()
             val distanceToSpot = Random.nextLong(20, 5001)
+            val spotNumber = "${alphabet.random()} ${(1..100).random()}"
             parkingSpots.add(
                 ParkingSpot(
-                    i.toLong(), latitude = latitude, longitude = longitude,
-                    isOccupied = isOccupied, distanceToSpot = distanceToSpot
+                    i.toLong(), spotNumber = spotNumber, latitude = latitude, longitude = longitude,
+                    isOccupied = isOccupied, distanceToSpot = distanceToSpot,
                 )
             )
         }

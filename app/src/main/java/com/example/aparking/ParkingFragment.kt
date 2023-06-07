@@ -9,9 +9,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageButton
+import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import com.example.aparking.parkingChoice.ChooseParkingSpotFragment
 
 class ParkingFragment : Fragment() {
     private val viewModel: MapViewModel by activityViewModels()
@@ -41,6 +43,10 @@ class ParkingFragment : Fragment() {
         }
         view.findViewById<ImageButton>(R.id.locationButton).setOnClickListener {
             viewModel.showCurrentLocation()
+        }
+        view.findViewById<LinearLayout>(R.id.parking_button).setOnClickListener{
+            val chooseParkingSpotFragment = ChooseParkingSpotFragment()
+            chooseParkingSpotFragment.show(parentFragmentManager, "ChooseParkingSpot")
         }
     }
 }

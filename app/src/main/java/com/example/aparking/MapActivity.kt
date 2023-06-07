@@ -1,5 +1,6 @@
 package com.example.aparking
 
+import android.content.Intent
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -9,11 +10,13 @@ import com.google.android.material.navigation.NavigationView
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
+import com.example.aparking.parkingTimer.ParkingActionListener
+import com.example.aparking.parkingTimer.ParkingTimerFragment
 import com.yandex.mapkit.MapKitFactory
 import com.yandex.mapkit.directions.DirectionsFactory
 import com.yandex.mapkit.transport.TransportFactory
 
-class MapActivity : AppCompatActivity() {
+class MapActivity : AppCompatActivity(), ParkingActionListener {
     private val viewModel: MapViewModel by viewModels()
 
     private lateinit var drawerLayout: DrawerLayout
@@ -21,10 +24,6 @@ class MapActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        MapKitFactory.setApiKey("68729688-2101-4bda-8ee8-58be30117867")
-        MapKitFactory.initialize(this)
-        DirectionsFactory.initialize(this)
         setContentView(R.layout.activity_map)
 
         // Прячем верхнюю панель (ActionBar)
@@ -46,6 +45,8 @@ class MapActivity : AppCompatActivity() {
                 }
                 R.id.nav_map -> {
                     // Открыть карту парковок
+                    val intent = Intent(this, MapActivity::class.java)
+                    startActivity(intent)
                 }
                 R.id.nav_cars -> {
                     // Открыть мои автомобили
@@ -54,7 +55,9 @@ class MapActivity : AppCompatActivity() {
                     // Открыть настройки
                 }
                 R.id.nav_about -> {
-                    // Открыть о нас
+                    // Открыть информацию о проекте
+                    val intent = Intent(this, WebViewActivity::class.java)
+                    startActivity(intent)
                 }
             }
             drawerLayout.closeDrawer(GravityCompat.START)
@@ -86,10 +89,10 @@ class MapActivity : AppCompatActivity() {
         return drawerLayout
     }
 
-    private fun replaceBottomSheetFragment(fragment: Fragment) {
+    override fun onStartParking() {
         supportFragmentManager
             .beginTransaction()
-            .replace(R.id.parking_fragment_container, fragment)
+            .replace(R.id.parking_fragment_container, ParkingTimerFragment())
             .commit()
     }
 }

@@ -6,10 +6,15 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
+import com.yandex.mapkit.MapKitFactory
+import com.yandex.mapkit.directions.DirectionsFactory
 
 class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        MapKitFactory.setApiKey("68729688-2101-4bda-8ee8-58be30117867")
+        MapKitFactory.initialize(this)
+        DirectionsFactory.initialize(this)
         setContentView(R.layout.activity_login)
 
         val sharedPreferences = getSharedPreferences("AParking", Context.MODE_PRIVATE)

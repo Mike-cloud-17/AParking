@@ -25,7 +25,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:drawableStartCompat="@drawable/ic_parking_time" />
+            app:drawableStartCompat="@drawable/ic_parking_time_small" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
