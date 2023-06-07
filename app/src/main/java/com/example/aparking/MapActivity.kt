@@ -10,6 +10,7 @@ import com.google.android.material.navigation.NavigationView
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.replace
 import com.example.aparking.parkingTimer.ParkingActionListener
 import com.example.aparking.parkingTimer.ParkingTimerFragment
 import com.yandex.mapkit.MapKitFactory
@@ -73,7 +74,7 @@ class MapActivity : AppCompatActivity(), ParkingActionListener {
         // Запустить ParkingFragment
         supportFragmentManager
             .beginTransaction()
-            .replace(R.id.parking_fragment_container, ParkingFragment())
+            .add(R.id.parking_fragment_container, ParkingFragment())
             .commit()
     }
 
