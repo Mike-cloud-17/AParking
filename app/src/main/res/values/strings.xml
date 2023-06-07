@@ -15,4 +15,11 @@
     <string name="purchase">Оплатить</string>
     <string name="debt">Задолженность</string>
     <string name="purchased">Оплачено</string>
+    <string name="load">Загрузка</string>
+    <string name="condition">Статус</string>
+    <string name="free">Свободно</string>
+    <string name="distance_to_parking_place">Дистанция до парковки</string>
+    <string name="show_path">Построить маршрут</string>
+    <string name="occupied">Занято:</string>
+    <string name="free_progress">Свободно:</string>
 </resources>
