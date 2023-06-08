@@ -26,4 +26,5 @@
     <string name="history">История</string>
     <string name="unpaid_header">Неоплаченные сессии</string>
     <string name="clear_history">Очистить историю</string>
+    <string name="distance">%1$d м</string>
 </resources>

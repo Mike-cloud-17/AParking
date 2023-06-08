@@ -48,7 +48,8 @@ import java.util.TreeMap
 import kotlin.random.Random
 
 
-class MapFragment : Fragment(), Session.SearchListener, MapObjectTapListener, DrivingRouteListener, ClusterListener {
+class MapFragment : Fragment(), Session.SearchListener, MapObjectTapListener, ClusterTapListener,
+    DrivingRouteListener, ClusterListener {
     private val viewModel: MapViewModel by activityViewModels()
     private lateinit var mapView: MapView
     private val map: Map
@@ -66,7 +67,8 @@ class MapFragment : Fragment(), Session.SearchListener, MapObjectTapListener, Dr
         isOccupied = false,
         latitude = 55.754742,
         longitude = 37.649025,
-        distanceToSpot = 0
+        distanceToSpot = 50,
+        address = "Покровский бульвар, 11с1"
     )
     private var query = ""
 
@@ -177,6 +179,7 @@ class MapFragment : Fragment(), Session.SearchListener, MapObjectTapListener, Dr
         showMapObjects()
 
         viewModel.getShowRouteLiveData().observe(viewLifecycleOwner, this::showRoute)
+        viewModel.getShowRouteToLiveData().observe(viewLifecycleOwner, this::showRouteTo)
         viewModel.getShowCurrentLocationLiveData().observe(viewLifecycleOwner, this::showCurrentLocation)
     }
 
@@ -355,6 +358,10 @@ class MapFragment : Fragment(), Session.SearchListener, MapObjectTapListener, Dr
             showMapObjects()
     }
 
+    private fun showRouteTo(destination: Point) {
+        requestRoutes(currentLocation!!, destination)
+    }
+
     private fun showCurrentLocation(value: Boolean) {
         if (value && currentLocation != null)
             map.move(
@@ -409,26 +416,44 @@ class MapFragment : Fragment(), Session.SearchListener, MapObjectTapListener, Dr
 
     override fun onClusterAdded(cluster: Cluster) {
         val spots = cluster.placemarks.map { parkingSpots[ComparablePoint.fromPoint(it.geometry)] }
-        val compareResult = spots.count { it?.isOccupied!! }.compareTo(spots.size / 2.0)
+        val occupied = spots.count { it?.isOccupied!! }
+        val compareResult = occupied.compareTo(spots.size / 2.0)
         val view = ClusterCircleView(requireContext())
         view.setText(cluster.size.toString())
-        if (compareResult < 0)
+        if (compareResult > 0)
             view.setColor(Color.RED)
         else if (compareResult == 0)
             view.setColor(Color.YELLOW)
         else
             view.setColor(Color.GREEN)
         cluster.appearance.setView(ViewProvider(view))
-        cluster.addClusterTapListener {
-            clusterBottomSheet.show(parentFragmentManager, "ClusterBottomSheet")
-            true
-        }
+        cluster.addClusterTapListener(this@MapFragment)
     }
 
     override fun onMapObjectTap(mapObject: MapObject, point: Point): Boolean {
         if (mapObject is PlacemarkMapObject) {
+            if (ComparablePoint.fromPoint(mapObject.geometry) ==
+                ComparablePoint.fromPoint(
+                    closestMoscowSpot.let { Point(it.latitude!!, it.longitude!!) }
+                )
+            ) {
+                viewModel.setSpot(closestMoscowSpot)
+            } else {
+                val spot = parkingSpots[ComparablePoint.fromPoint(mapObject.geometry)]!!
+                viewModel.setSpot(spot)
+            }
             pointBottomSheet.show(parentFragmentManager, "PointBottomSheet")
         }
+        return true
+    }
+
+    override fun onClusterTap(cluster: Cluster): Boolean {
+        val spots = cluster.placemarks.map { parkingSpots[ComparablePoint.fromPoint(it.geometry)] }
+        val occupied = spots.count { it?.isOccupied!! }
+        val free = spots.count { !it?.isOccupied!! }
+        viewModel.setSpot(spots.first()!!)
+        viewModel.setLoad(occupied, free)
+        clusterBottomSheet.show(parentFragmentManager, "ClusterBottomSheet")
         return true
     }
 }

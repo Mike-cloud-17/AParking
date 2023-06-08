@@ -32,13 +32,17 @@ class ParkingFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        viewModel.getShowRouteIconLiveData().observe(viewLifecycleOwner) {
+            view.findViewById<ImageButton>(R.id.routeButton).setImageResource(
+                if (it) R.drawable.ic_route else R.drawable.ic_delete_route
+            )
+            routeDisabled = it
+        }
+
         view.findViewById<ImageButton>(R.id.routeButton).let {button ->
             button.setOnClickListener {
                 viewModel.showRoute(routeDisabled)
-                button.setImageResource(
-                    if (routeDisabled) R.drawable.ic_delete_route else R.drawable.ic_route
-                )
-                routeDisabled = !routeDisabled
             }
         }
         view.findViewById<ImageButton>(R.id.locationButton).setOnClickListener {
