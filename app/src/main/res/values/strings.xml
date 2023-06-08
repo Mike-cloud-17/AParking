@@ -22,4 +22,6 @@
     <string name="show_path">Построить маршрут</string>
     <string name="occupied">Занято:</string>
     <string name="free_progress">Свободно:</string>
+    <string name="number_unpaid_header">Неоплаченные сессии (%1$d)</string>
+    <string name="history">История</string>
 </resources>

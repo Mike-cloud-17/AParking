@@ -1,5 +1,6 @@
 package com.example.aparking.parkingTimer
 
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -8,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.example.aparking.SessionsActivity
 import com.example.aparking.databinding.FragmentParkingTimerBinding
 
 interface ParkingActionListener {
@@ -34,6 +36,14 @@ class ParkingTimerFragment : Fragment() {
         binding.root.setBackgroundColor(Color.TRANSPARENT)
 
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.textViewTimer.setOnClickListener {
+            startActivity(Intent(activity, SessionsActivity::class.java))
+        }
     }
 }
 

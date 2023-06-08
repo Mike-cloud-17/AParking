@@ -48,12 +48,14 @@ import java.util.TreeMap
 import kotlin.random.Random
 
 
-class MapFragment : Fragment(), Session.SearchListener, DrivingRouteListener, ClusterListener {
+class MapFragment : Fragment(), Session.SearchListener, MapObjectTapListener, DrivingRouteListener, ClusterListener {
     private val viewModel: MapViewModel by activityViewModels()
     private lateinit var mapView: MapView
     private val map: Map
         get() = mapView.map
     private lateinit var trafficButton: Button
+    private lateinit var pointBottomSheet: PointBottomSheet
+    private lateinit var clusterBottomSheet: ClusterBottomSheet
     private var parkingSpots: MutableMap<ComparablePoint, ParkingSpot> = TreeMap()
     private val mapKit = MapKitFactory.getInstance()
     private var currentLocation: Point? = null
@@ -81,6 +83,12 @@ class MapFragment : Fragment(), Session.SearchListener, DrivingRouteListener, Cl
         Manifest.permission.ACCESS_FINE_LOCATION,
         Manifest.permission.ACCESS_COARSE_LOCATION
     )
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        pointBottomSheet = PointBottomSheet()
+        clusterBottomSheet = ClusterBottomSheet()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -321,7 +329,8 @@ class MapFragment : Fragment(), Session.SearchListener, DrivingRouteListener, Cl
             )!!.toBitmap(90, 90)
         )
         val location = Point(spot.latitude!!, spot.longitude!!)
-        clustersCollection.addPlacemark(location, imageProvider)
+        val placemark = clustersCollection.addPlacemark(location, imageProvider)
+        placemark.addTapListener(this@MapFragment)
     }
 
     private fun showRoute(value: Boolean) {
@@ -411,7 +420,15 @@ class MapFragment : Fragment(), Session.SearchListener, DrivingRouteListener, Cl
             view.setColor(Color.GREEN)
         cluster.appearance.setView(ViewProvider(view))
         cluster.addClusterTapListener {
+            clusterBottomSheet.show(parentFragmentManager, "ClusterBottomSheet")
             true
         }
+    }
+
+    override fun onMapObjectTap(mapObject: MapObject, point: Point): Boolean {
+        if (mapObject is PlacemarkMapObject) {
+            pointBottomSheet.show(parentFragmentManager, "PointBottomSheet")
+        }
+        return true
     }
 }
