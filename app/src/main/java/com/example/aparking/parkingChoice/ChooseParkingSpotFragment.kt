@@ -11,9 +11,11 @@ import android.widget.LinearLayout
 import android.widget.ListView
 import android.widget.PopupWindow
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.aparking.MapViewModel
 import com.example.aparking.R
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.example.aparking.databinding.FragmentChooseParkingSpotBinding
@@ -22,6 +24,7 @@ import com.example.aparking.parkingTimer.ParkingActionListener
 class ChooseParkingSpotFragment : BottomSheetDialogFragment() {
 
     private val viewModel: ChooseParkingSpotViewModel by viewModels()
+    private val parentViewModel: MapViewModel by activityViewModels()
     private lateinit var binding: FragmentChooseParkingSpotBinding
     // Для создания фрагмента с таймером
     private lateinit var parkingActionListener: ParkingActionListener
@@ -40,6 +43,7 @@ class ChooseParkingSpotFragment : BottomSheetDialogFragment() {
 
         val parkingSpotAdapter = ParkingSpotAdapter { spot ->
             viewModel.selectSpot(spot)
+            parentViewModel.selectSpot(spot.spotNumber!!)
         }
 
         binding.apply {
