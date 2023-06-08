@@ -5,7 +5,7 @@ import java.time.LocalDateTime
 data class ParkingSpot(
     val id: Long?,
     val sensorID: Long? = null,
-    var isOccupied: Boolean?,
+    var isOccupied: Boolean,
     var spotNumber: String? = null,
     var startTime: LocalDateTime? = null,
     var endTime: LocalDateTime? = null,

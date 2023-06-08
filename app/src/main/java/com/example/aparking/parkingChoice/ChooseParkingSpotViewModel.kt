@@ -18,7 +18,7 @@ class ChooseParkingSpotViewModel() : ViewModel() {
     val isParkingStarted: LiveData<Boolean> = _isParkingStarted
 
     // Инициализируем текущего пользователя
-    private val user = User()
+    private val user = User.getInstance()
 
     init {
         // Инициализируем список парковочных мест / по факту запрашиваем его с бэка

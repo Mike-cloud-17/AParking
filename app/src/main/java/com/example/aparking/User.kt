@@ -1,11 +1,9 @@
 package com.example.aparking
 
-import java.time.LocalDateTime
-
 data class User(
     var name: String = "Михаил",
     var surname: String = "Шкляр",
-    var birthday: LocalDateTime = LocalDateTime.of(2001, 7, 17, 12, 25)
+    var birthday: String = "17.07.2001"
 ) {
     private var carsList: MutableList<Car> = emptyList<Car>().toMutableList()
 
@@ -17,6 +15,15 @@ data class User(
             Car("Белый Mercedes Эвелины Урусовой", "237 LPO | 21"),
             Car("Lada Sedan для Макарова Сергея Львовича", "555 VVV | 55")
         )
+    }
+
+    companion object {
+        @Volatile private var INSTANCE: User? = null
+
+        fun getInstance(): User =
+            INSTANCE ?: synchronized(this) {
+                INSTANCE ?: User().also { INSTANCE = it }
+            }
     }
 
     fun getCars(): MutableList<Car> = carsList

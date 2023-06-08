@@ -12,9 +12,6 @@ import com.yandex.mapkit.directions.DirectionsFactory
 class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        MapKitFactory.setApiKey("68729688-2101-4bda-8ee8-58be30117867")
-        MapKitFactory.initialize(this)
-        DirectionsFactory.initialize(this)
         setContentView(R.layout.activity_login)
 
         val sharedPreferences = getSharedPreferences("AParking", Context.MODE_PRIVATE)
@@ -24,7 +21,6 @@ class LoginActivity : AppCompatActivity() {
             // Переход на экран с картой, так как пользователь уже вошел
             val intent = Intent(this, MapActivity::class.java)
             startActivity(intent)
-            finish()
 
         } else {
             // Если пользователь еще не вошел, то отображаем экран входа

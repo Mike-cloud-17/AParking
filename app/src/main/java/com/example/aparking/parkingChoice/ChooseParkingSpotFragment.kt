@@ -66,6 +66,7 @@ class ChooseParkingSpotFragment : BottomSheetDialogFragment() {
                 carNumber.text = number
             }
 
+            // Изменение отображения для кнопки подтверждения выбора автомобиля
             viewModel.isConfirmed.observe(viewLifecycleOwner) { isConfirmed ->
                 if (isConfirmed) {
                     confirmButton.setImageResource(R.drawable.ic_choosed_item)
@@ -74,6 +75,7 @@ class ChooseParkingSpotFragment : BottomSheetDialogFragment() {
                 }
             }
 
+            // подтверждение выбора автомобиля
             confirmButton.setOnClickListener {
                 viewModel.confirmCar()
                 startParkingButton.visibility = View.VISIBLE

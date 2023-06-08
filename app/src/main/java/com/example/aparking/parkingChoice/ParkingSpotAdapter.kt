@@ -3,8 +3,6 @@ package com.example.aparking.parkingChoice
 import android.content.res.Resources
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -12,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.aparking.ParkingSpot
 import com.example.aparking.R
 import com.example.aparking.databinding.ItemParkingSpotBinding
-import com.google.android.material.internal.ViewUtils.dpToPx
 
 class ParkingSpotAdapter(private val onClick: (ParkingSpot) -> Unit) :
     ListAdapter<ParkingSpot, ParkingSpotAdapter.ParkingSpotViewHolder>(ParkingSpotComparator()) {

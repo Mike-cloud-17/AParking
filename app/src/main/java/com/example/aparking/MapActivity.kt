@@ -43,6 +43,8 @@ class MapActivity : AppCompatActivity(), ParkingActionListener {
             when (menuItem.itemId) {
                 R.id.nav_profile -> {
                     // Открыть профиль
+                    val intent = Intent(this, ProfileActivity::class.java)
+                    startActivity(intent)
                 }
                 R.id.nav_map -> {
                     // Открыть карту парковок
@@ -54,6 +56,8 @@ class MapActivity : AppCompatActivity(), ParkingActionListener {
                 }
                 R.id.nav_settings -> {
                     // Открыть настройки
+                    val intent = Intent(this, SettingsActivity::class.java)
+                    startActivity(intent)
                 }
                 R.id.nav_about -> {
                     // Открыть информацию о проекте

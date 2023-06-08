@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="40dp"
+            android:paddingEnd="40dp"
+            android:paddingTop="47dp">
+
+            <TextView
+                android:id="@+id/language_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Выбор языка"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Spinner
+                android:id="@+id/language_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:spinnerMode="dropdown"
+                android:textColor="@color/black"
+                app:layout_constraintTop_toBottomOf="@id/language_label"
+                app:layout_constraintStart_toStartOf="@id/language_label" />
+
+            <TextView
+                android:id="@+id/filters_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="22dp"
+                android:text="Фильтр услуг"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@id/language_spinner"
+                app:layout_constraintStart_toStartOf="@id/language_spinner"
+                />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/filter_stations"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="7dp"
+                app:layout_constraintTop_toBottomOf="@id/filters_label"
+                app:layout_constraintStart_toStartOf="parent"
+                >
+
+                <TextView
+                    android:id="@+id/filter_stations_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Зарядные станции"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+
+                <ImageButton
+                    android:id="@+id/filter_stations_info_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:gravity="center_vertical"
+                    android:background="@color/white"
+                    app:srcCompat="@drawable/ic_info"
+                    app:layout_constraintStart_toEndOf="@id/filter_stations_label"
+                    app:layout_constraintTop_toTopOf="@id/filter_stations_label"
+                    app:layout_constraintBottom_toBottomOf="@id/filter_stations_label"
+                />
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/switch_station"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/filter_stations_info_button"
+                    app:layout_constraintBottom_toBottomOf="@id/filter_stations_info_button"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <View
+                android:id="@+id/stations_divider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray"
+                android:layout_marginTop="5dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/filter_stations"/>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/filter_free_spots"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="5dp"
+                app:layout_constraintTop_toBottomOf="@id/stations_divider"
+                app:layout_constraintStart_toStartOf="parent"
+                >
+
+                <TextView
+                    android:id="@+id/filter_spots_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Бесплатные парковки"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+
+                <ImageButton
+                    android:id="@+id/filter_spots_info_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:gravity="center_vertical"
+                    android:background="@color/white"
+                    app:srcCompat="@drawable/ic_info"
+                    app:layout_constraintStart_toEndOf="@id/filter_spots_label"
+                    app:layout_constraintTop_toTopOf="@id/filter_spots_label"
+                    app:layout_constraintBottom_toBottomOf="@id/filter_spots_label"
+                    />
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/switch_free_spots"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/filter_spots_info_button"
+                    app:layout_constraintBottom_toBottomOf="@id/filter_spots_info_button"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <View
+                android:id="@+id/spots_divider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray"
+                android:layout_marginTop="5dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/filter_free_spots"/>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/filter_available_spots"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="5dp"
+                app:layout_constraintTop_toBottomOf="@id/spots_divider"
+                app:layout_constraintStart_toStartOf="parent"
+                >
+
+                <TextView
+                    android:id="@+id/filter_available_spots_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Свободные парковки"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+
+                <ImageButton
+                    android:id="@+id/filter_available_spots_info_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:gravity="center_vertical"
+                    android:background="@color/white"
+                    app:srcCompat="@drawable/ic_info"
+                    app:layout_constraintStart_toEndOf="@id/filter_available_spots_label"
+                    app:layout_constraintTop_toTopOf="@id/filter_available_spots_label"
+                    app:layout_constraintBottom_toBottomOf="@id/filter_available_spots_label"
+                    />
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/switch_available_spots"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/filter_available_spots_info_button"
+                    app:layout_constraintBottom_toBottomOf="@id/filter_available_spots_info_button"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/data_update_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="83dp"
+                android:text="Автоматическое обновление данных"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@id/filter_available_spots"
+                app:layout_constraintStart_toStartOf="@id/filter_available_spots"
+                />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/data_update"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="16dp"
+                app:layout_constraintTop_toBottomOf="@id/data_update_label"
+                app:layout_constraintStart_toStartOf="parent"
+                >
+
+                <TextView
+                    android:id="@+id/data_update_switch_label"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Обновлять по сотовой сети"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/data_update_switch"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintHorizontal_chainStyle="packed"/>
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/data_update_switch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        app:headerLayout="@layout/nav_header"
+        app:menu="@menu/drawer_menu" />
+
+</androidx.drawerlayout.widget.DrawerLayout>
