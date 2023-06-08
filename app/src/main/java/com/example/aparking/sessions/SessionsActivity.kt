@@ -1,11 +1,14 @@
-package com.example.aparking
+package com.example.aparking.sessions
 
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import com.example.aparking.R
 import com.example.aparking.databinding.ActivitySessionsBinding
 
 class SessionsActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySessionsBinding
+    private val viewModel: SessionsViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -14,6 +17,8 @@ class SessionsActivity : AppCompatActivity() {
 
         // Прячем верхнюю панель (ActionBar)
         supportActionBar?.hide()
+
+        viewModel.startTimer(intent.getLongExtra("current_time", 0L))
 
         supportFragmentManager
             .beginTransaction()
@@ -40,5 +45,7 @@ class SessionsActivity : AppCompatActivity() {
                 .replace(R.id.fragment_container, HistorySessionFragment(), "HistorySessionFragment")
                 .commit()
         }
+
+        binding.imageButton.setOnClickListener { finish() }
     }
 }

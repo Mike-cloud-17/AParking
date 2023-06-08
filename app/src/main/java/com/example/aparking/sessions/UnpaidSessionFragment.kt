@@ -1,10 +1,11 @@
-package com.example.aparking
+package com.example.aparking.sessions
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.example.aparking.R
 import com.example.aparking.databinding.FragmentSessionUnpaidBinding
 
 class UnpaidSessionFragment : Fragment() {

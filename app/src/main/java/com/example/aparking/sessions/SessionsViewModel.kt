@@ -1,27 +1,22 @@
-package com.example.aparking.parkingTimer
+package com.example.aparking.sessions
 
 import android.os.CountDownTimer
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import java.util.*
+import java.util.Locale
 
-class ParkingTimerViewModel : ViewModel() {
-
+class SessionsViewModel : ViewModel() {
     private val _timeString = MutableLiveData("00:00:00")
-    private val _time = MutableLiveData<Long>()
     val timeString: LiveData<String> = _timeString
-    val time: LiveData<Long> = _time
-
     private var timer: CountDownTimer? = null
 
-    fun startTimer() {
+    fun startTimer(time: Long) {
         timer = object : CountDownTimer(Long.MAX_VALUE, 1000) {
-            var timeInMilliseconds = 0L
+            var timeInMilliseconds = time
             override fun onTick(millisUntilFinished: Long) {
                 timeInMilliseconds += 1000
-                _time.value = timeInMilliseconds
-                _timeString.value = convertTime(timeInMilliseconds)
+                _timeString.postValue(convertTime(timeInMilliseconds))
             }
 
             override fun onFinish() {

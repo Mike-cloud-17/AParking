@@ -1,14 +1,16 @@
-package com.example.aparking
+package com.example.aparking.sessions
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import com.example.aparking.databinding.FragmentSessionCurrentBinding
 
 class CurrentSessionFragment : Fragment() {
     private lateinit var binding: FragmentSessionCurrentBinding
+    private val viewModel: SessionsViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -22,5 +24,10 @@ class CurrentSessionFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        viewModel.timeString.observe(viewLifecycleOwner, this::setTime)
+    }
+
+    private fun setTime(time: String) {
+        binding.currentSessionTime.text = time
     }
 }
