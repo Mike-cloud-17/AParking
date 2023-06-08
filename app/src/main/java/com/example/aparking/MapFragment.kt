@@ -359,6 +359,7 @@ class MapFragment : Fragment(), Session.SearchListener, MapObjectTapListener, Cl
     }
 
     private fun showRouteTo(destination: Point) {
+        showMapObjects()
         requestRoutes(currentLocation!!, destination)
     }
 

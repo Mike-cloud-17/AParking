@@ -20,11 +20,12 @@ class MapViewModel : ViewModel() {
 
     fun showRoute(destination: Point) {
         showRouteToLiveData.postValue(destination)
-        showRouteIconLiveData.postValue(true)
+        showRouteIconLiveData.postValue(false)
     }
 
     fun showCurrentLocation() {
         showCurrentLocationLiveData.postValue(true)
+        showRouteIconLiveData.postValue(false)
     }
 
     fun selectSpot(name: String) {
