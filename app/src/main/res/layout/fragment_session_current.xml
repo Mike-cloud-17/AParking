@@ -122,7 +122,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginVertical="10dp"
-                    android:text="ул. Такая-то, д. X/xx"
+                    android:text="Покровский бульвар, 11с1"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
             </LinearLayout>
@@ -150,7 +150,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginVertical="10dp"
-                    android:text="Nissan какой-то 2"
+                    android:text="Nissan Михаила"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
 

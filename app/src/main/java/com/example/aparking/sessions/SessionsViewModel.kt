@@ -8,8 +8,14 @@ import java.util.Locale
 
 class SessionsViewModel : ViewModel() {
     private val _timeString = MutableLiveData("00:00:00")
+    private val _spotNumber = MutableLiveData("")
     val timeString: LiveData<String> = _timeString
+    val spotNumber: LiveData<String> = _spotNumber
     private var timer: CountDownTimer? = null
+
+    fun setSpotNumber(number: String) {
+        _spotNumber.postValue(number)
+    }
 
     fun startTimer(time: Long) {
         timer = object : CountDownTimer(Long.MAX_VALUE, 1000) {

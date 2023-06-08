@@ -7,7 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import com.example.aparking.MapViewModel
 import com.example.aparking.sessions.SessionsActivity
 import com.example.aparking.databinding.FragmentParkingTimerBinding
 
@@ -18,7 +20,9 @@ interface ParkingActionListener {
 class ParkingTimerFragment : Fragment() {
     private lateinit var binding: FragmentParkingTimerBinding
     private val viewModel: ParkingTimerViewModel by viewModels()
+    private val parentViewModel: MapViewModel by activityViewModels()
     private var time = 0L
+    private var spotNumber = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,6 +35,9 @@ class ParkingTimerFragment : Fragment() {
         }
         viewModel.time.observe(viewLifecycleOwner) {
             time = it
+        }
+        parentViewModel.getSelectedSpotLiveData().observe(viewLifecycleOwner) {
+            spotNumber = it
         }
 
         viewModel.startTimer()
@@ -48,6 +55,7 @@ class ParkingTimerFragment : Fragment() {
             startActivity(
                 Intent(activity, SessionsActivity::class.java)
                     .putExtra("current_time", time)
+                    .putExtra("spot_number", spotNumber)
             )
         }
     }

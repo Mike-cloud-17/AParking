@@ -25,9 +25,14 @@ class CurrentSessionFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.timeString.observe(viewLifecycleOwner, this::setTime)
+        viewModel.spotNumber.observe(viewLifecycleOwner, this::setSpotNumber)
     }
 
     private fun setTime(time: String) {
         binding.currentSessionTime.text = time
+    }
+
+    private fun setSpotNumber(number: String) {
+        binding.parkingPlace.spotNumber.text = number
     }
 }

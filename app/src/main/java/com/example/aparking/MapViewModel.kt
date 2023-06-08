@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 class MapViewModel : ViewModel() {
     private var showRouteLiveData = MutableLiveData<Boolean>()
     private var showCurrentLocationLiveData = MutableLiveData<Boolean>()
+    private var selectedSpotLiveData = MutableLiveData<String>()
 
     fun showRoute(display: Boolean) {
         showRouteLiveData.postValue(display)
@@ -15,7 +16,13 @@ class MapViewModel : ViewModel() {
         showCurrentLocationLiveData.postValue(true)
     }
 
+    fun selectSpot(name: String) {
+        selectedSpotLiveData.postValue(name)
+    }
+
     fun getShowRouteLiveData() = showRouteLiveData
 
     fun getShowCurrentLocationLiveData() = showCurrentLocationLiveData
+
+    fun getSelectedSpotLiveData() = selectedSpotLiveData
 }

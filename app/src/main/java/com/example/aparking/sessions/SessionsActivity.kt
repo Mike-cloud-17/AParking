@@ -19,6 +19,7 @@ class SessionsActivity : AppCompatActivity() {
         supportActionBar?.hide()
 
         viewModel.startTimer(intent.getLongExtra("current_time", 0L))
+        viewModel.setSpotNumber(intent.getStringExtra("spot_number") ?: "A21")
 
         supportFragmentManager
             .beginTransaction()
