@@ -6,4 +6,5 @@ The project's area of application includes urban infrastructure and commercial p
 This service can be used by municipalities, owners of private parking lots and shopping centers, as well as drivers wishing to save time and money when searching for and paying for parking.
 
 Here is the main screen of the application:
+
 ![image](https://github.com/Mike-cloud-17/AParking/assets/65617930/e473cfd6-5ad0-4e47-97ed-9fd5ec0f30bc)
