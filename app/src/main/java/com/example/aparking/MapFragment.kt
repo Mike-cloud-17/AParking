@@ -375,7 +375,7 @@ class MapFragment : Fragment(), Session.SearchListener, MapObjectTapListener, Cl
     override fun onSearchError(error: Error) {
         // Handle error.
         Log.e("YandexMapKit", "Search error: $error")
-        var errorMessage = "Неизвестная ошибка"
+        var errorMessage = "Проблема с интернет соединением"
         if (error is RemoteError) {
             errorMessage = "Беспроводная ошибка"
         } else if (error is NetworkError) {

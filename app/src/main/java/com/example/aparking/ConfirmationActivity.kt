@@ -18,7 +18,7 @@ class ConfirmationActivity : AppCompatActivity() {
         confirmButton.setOnClickListener {
             val enteredCode = code.text.toString()
             // Проверяем код подтверждения (здесь мы просто сравниваем с конкретным кодом для демонстрации)
-            if (enteredCode == "153517" || enteredCode == "382856" || enteredCode == "1") {
+            if (enteredCode == "153517" || enteredCode == "382856" || enteredCode == "117105" || enteredCode == "1") {
                 // Получаем номер телефона
                 val phoneNumber = intent.getStringExtra("PHONE_NUMBER")
                 // Проверяем наличие номера в базе данных (здесь мы просто сравниваем с конкретным номером для демонстрации)
