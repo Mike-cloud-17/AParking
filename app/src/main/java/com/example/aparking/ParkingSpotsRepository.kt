@@ -23,7 +23,7 @@ class ParkingSpotsRepository {
             parkingSpots.add(
                 ParkingSpot(
                     i.toLong(), spotNumber = spotNumber, latitude = latitude, longitude = longitude,
-                    isOccupied = isOccupied, distanceToSpot = distanceToSpot,
+                    isOccupied = isOccupied, distanceToSpot = distanceToSpot, address = "г. Алматы",
                 )
             )
         }
@@ -40,7 +40,7 @@ class ParkingSpotsRepository {
             parkingSpots.add(
                 ParkingSpot(
                     i.toLong(), spotNumber = spotNumber, latitude = latitude, longitude = longitude,
-                    isOccupied = isOccupied, distanceToSpot = distanceToSpot,
+                    isOccupied = isOccupied, distanceToSpot = distanceToSpot, address = "г. Москва",
                 )
             )
         }

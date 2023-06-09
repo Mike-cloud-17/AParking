@@ -1,17 +1,17 @@
 package com.example.aparking
 
 import android.app.Dialog
-import android.content.res.loader.ResourcesProvider
+import android.graphics.Typeface
 import android.os.Bundle
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.StyleSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
-import androidx.appcompat.content.res.AppCompatResources
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import com.example.aparking.databinding.FragmentPointBinding
-import com.example.aparking.parkingChoice.ChooseParkingSpotFragment
 import com.example.aparking.parkingTimer.ParkingTimerFragment
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -71,5 +71,22 @@ class PointBottomSheet : BottomSheetDialogFragment() {
         binding.buttonText.text = if (point.isOccupied) "Начинаю парковаться" else "Парковка недоступна"
         binding.parkingButton.setBackgroundResource(
             if (point.isOccupied) R.drawable.holder_rounded_orange else R.drawable.holder_rounded_gray)
+
+        // Обновляем метку адреса, делая номер парковки жирным
+        val labelText = getString(R.string.parking_address)
+        val formattedLabelText = getFormattedLabelText(labelText, spotName)
+        binding.addressLabel.text = formattedLabelText
+    }
+
+    private fun getFormattedLabelText(labelText: String, spotNumber: String): SpannableString {
+        val fullText = "$labelText \"$spotNumber\""
+
+        // Создаем SpannableString и устанавливаем жирный стиль для номера парковки
+        val spannableString = SpannableString(fullText)
+        val start = fullText.indexOf(spotNumber)
+        val end = start + spotNumber.length
+        spannableString.setSpan(StyleSpan(Typeface.BOLD), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+        return spannableString
     }
 }

@@ -13,7 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:text="Пожалуйста введите 4-x значный код из смс:"
+        android:text="Пожалуйста введите 6-ти значный код из смс:"
         android:textColor="@color/black"
         android:textSize="18sp"
         android:layout_margin="40dp"
