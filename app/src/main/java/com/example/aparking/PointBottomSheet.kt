@@ -9,6 +9,7 @@ import android.widget.FrameLayout
 import androidx.fragment.app.activityViewModels
 import com.example.aparking.databinding.FragmentPointBinding
 import com.example.aparking.parkingChoice.ChooseParkingSpotFragment
+import com.example.aparking.parkingTimer.ParkingTimerFragment
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -19,6 +20,7 @@ class PointBottomSheet : BottomSheetDialogFragment() {
     private val parentViewModel: MapViewModel by activityViewModels()
     lateinit var behavior: BottomSheetBehavior<FrameLayout>
     lateinit var location: Point
+    var spotName = ""
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -44,16 +46,21 @@ class PointBottomSheet : BottomSheetDialogFragment() {
             behavior.state = BottomSheetBehavior.STATE_HIDDEN
         }
         binding.parkingButton.setOnClickListener {
-            val chooseParkingSpotFragment = ChooseParkingSpotFragment()
-            chooseParkingSpotFragment.show(parentFragmentManager, "ChooseParkingSpot")
+            parentViewModel.selectSpot(spotName)
+            parentFragmentManager
+                .beginTransaction()
+                .replace(R.id.parking_fragment_container, ParkingTimerFragment())
+                .commit()
             behavior.state = BottomSheetBehavior.STATE_HIDDEN
         }
     }
 
     private fun setPointData(point: ParkingSpot) {
         location = Point(point.latitude!!, point.longitude!!)
+        spotName = point.spotNumber!!
         binding.address.text = point.address
         binding.condition.text = if (point.isOccupied) "Занято" else "Свободно"
         binding.distance.text = getString(R.string.distance, point.distanceToSpot)
+
     }
 }
