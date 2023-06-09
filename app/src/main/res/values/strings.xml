@@ -30,5 +30,6 @@
     <string name="car_brand">Марка автомобиля</string>
     <string name="car_number">Гос номер</string>
     <string name="being_used">Сейчас используется</string>
+    <string name="will_use">Поеду на нем</string>
     <string name="my_cars">Мои автомобили</string>
 </resources>

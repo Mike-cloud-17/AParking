@@ -12,8 +12,17 @@
         android:background="@drawable/holder_rounded_orange"
         app:layout_constraintBottom_toBottomOf="parent">
 
+        <LinearLayout
+            android:id="@+id/add_height"
+            android:layout_width="wrap_content"
+            android:layout_height="140dp"
+            android:orientation="vertical"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/car_name_collapsed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Nissan Какой-то"
@@ -25,6 +34,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:id="@+id/car_number_collapsed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="777 KNS 02"
@@ -35,7 +45,7 @@
             android:layout_marginBottom="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView" />
+            app:layout_constraintTop_toBottomOf="@+id/car_name_collapsed" />
 
         <ImageButton
             android:id="@+id/selectSpot"
@@ -49,6 +59,7 @@
             app:srcCompat="@drawable/ic_unchoosed_item" />
 
         <TextView
+            android:id="@+id/is_selected_text"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:text="@string/being_used"
@@ -74,6 +85,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
+        android:id="@+id/name_holder"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:background="@drawable/holder_rounded_white"
@@ -93,6 +105,7 @@
             android:text="@string/car_brand" />
 
         <TextView
+            android:id="@+id/car_name_expanded"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Nissan Какой-то"
@@ -101,6 +114,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/number_holder"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:background="@drawable/holder_rounded_white"
@@ -120,6 +134,7 @@
             android:text="@string/car_number" />
 
         <TextView
+            android:id="@+id/car_number_expanded"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="777 KNS 02"

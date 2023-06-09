@@ -53,6 +53,8 @@ class MapActivity : AppCompatActivity(), ParkingActionListener {
                 }
                 R.id.nav_cars -> {
                     // Открыть мои автомобили
+                    val intent = Intent(this, CarsActivity::class.java)
+                    startActivity(intent)
                 }
                 R.id.nav_settings -> {
                     // Открыть настройки
