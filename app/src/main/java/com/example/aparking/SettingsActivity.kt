@@ -52,8 +52,6 @@ class SettingsActivity : AppCompatActivity() {
         }
     }
 
-
-
     private fun filterParkingSpots() {
         val allParkingSpots: List<ParkingSpot> = ParkingSpotsRepository().getParkingSpots()
         val freeParkingSpots = allParkingSpots.filter { !it.isOccupied }

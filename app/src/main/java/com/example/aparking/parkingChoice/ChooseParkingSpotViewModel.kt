@@ -1,11 +1,10 @@
 package com.example.aparking.parkingChoice
 
-import android.app.Application
-import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.aparking.*
+import kotlin.random.Random.Default.nextInt
 
 class ChooseParkingSpotViewModel() : ViewModel() {
     val parkingSpots = MutableLiveData<List<ParkingSpot>>()
@@ -23,7 +22,8 @@ class ChooseParkingSpotViewModel() : ViewModel() {
     init {
         // Инициализируем список парковочных мест / по факту запрашиваем его с бэка
         val parkingSpotsFromBack = listOf<ParkingSpot>().toMutableList()
-        for (i in 1..9) {
+        val parkingSpotsNumber = nextInt(3, 10)
+        for (i in 1..parkingSpotsNumber) {
             parkingSpotsFromBack.add(ParkingSpotsRepository().getParkingSpots()[i])
         }
         parkingSpots.value = parkingSpotsFromBack
