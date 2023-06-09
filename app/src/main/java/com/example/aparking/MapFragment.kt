@@ -450,7 +450,7 @@ class MapFragment : Fragment(), Session.SearchListener, MapObjectTapListener, Cl
 
     override fun onClusterTap(cluster: Cluster): Boolean {
         val spots = cluster.placemarks.map { parkingSpots[ComparablePoint.fromPoint(it.geometry)] }
-        val occupied = spots.count { it?.isOccupied!! }
+        val occupied = spots.count { it?.isOccupied == true }
         val free = spots.count { !it?.isOccupied!! }
         viewModel.setSpot(spots.first()!!)
         viewModel.setLoad(occupied, free)

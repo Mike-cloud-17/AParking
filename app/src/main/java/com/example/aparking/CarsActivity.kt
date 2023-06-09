@@ -10,12 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.aparking.databinding.ActivityCarsBinding
 
 class CarsActivity : AppCompatActivity() {
-    val cars = mutableListOf(
-        Car("Nissan 1", "776 NNS 02"),
-        Car("Nissan 2", "777 KNS 02"),
-        Car("Nissan 3", "778 KSS 02"),
-        Car("Nissan 4", "779 KSS 02"),
-    )
+    val cars = User.getInstance().getCars()
     private lateinit var adapter: CarsAdapter
     private lateinit var binding: ActivityCarsBinding
 
