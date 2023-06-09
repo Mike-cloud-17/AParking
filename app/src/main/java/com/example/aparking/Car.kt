@@ -1,4 +1,8 @@
 package com.example.aparking
 
-data class Car(var carTitle: String = "Автомобиль", var carNumber: String) {
+data class Car(
+    var carTitle: String = "Автомобиль",
+    var carNumber: String,
+    var isSelected: Boolean = false
+) {
 }

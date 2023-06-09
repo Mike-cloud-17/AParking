@@ -41,4 +41,10 @@ data class User(
         carsList.forEach { carsTitleList.add(it.carTitle) }
         return carsTitleList
     }
+
+    fun selectCar(carTitle: String){
+        carsList.forEach { car ->
+            car.isSelected = car.carTitle == carTitle
+        }
+    }
 }

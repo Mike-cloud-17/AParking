@@ -48,8 +48,12 @@ class MapActivity : AppCompatActivity(), ParkingActionListener {
                 }
                 R.id.nav_map -> {
                     // Открыть карту парковок
-                    val intent = Intent(this, MapActivity::class.java)
-                    startActivity(intent)
+                    // Проверяем, является ли текущая активность MapActivity
+                    if (this !is MapActivity) {
+                        // Если нет, то открываем карту парковок
+                        val intent = Intent(this, MapActivity::class.java)
+                        startActivity(intent)
+                    }
                 }
                 R.id.nav_cars -> {
                     // Открыть мои автомобили

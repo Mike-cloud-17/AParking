@@ -3,21 +3,14 @@ package com.example.aparking
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.text.Html
 import android.view.MenuItem
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.GravityCompat
-import androidx.drawerlayout.widget.DrawerLayout
-import com.google.android.material.navigation.NavigationView
 
 class ProfileActivity : AppCompatActivity() {
-    private lateinit var drawerLayout: DrawerLayout
-    private lateinit var navigationView: NavigationView
-
-    // создайте экземпляр User здесь
+    // создаем экземпляр User здесь
     private val user = User.getInstance()
 
     private lateinit var nameEditText: EditText
@@ -31,10 +24,6 @@ class ProfileActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
-
-        // Для открытия меню
-        drawerLayout = findViewById(R.id.drawer_layout)
-        navigationView = findViewById(R.id.nav_view)
 
         // изменяем заголовок ActionBar
         supportActionBar?.title = "Профиль"
@@ -94,42 +83,13 @@ class ProfileActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
-
-        navigationView.setNavigationItemSelectedListener { menuItem ->
-            when (menuItem.itemId) {
-                R.id.nav_profile -> {
-                    // Открыть профиль
-                    val intent = Intent(this, ProfileActivity::class.java)
-                    startActivity(intent)
-                }
-                R.id.nav_map -> {
-                    // Открыть карту парковок
-                    val intent = Intent(this, MapActivity::class.java)
-                    startActivity(intent)
-                }
-                R.id.nav_cars -> {
-                    // Открыть мои автомобили
-                }
-                R.id.nav_settings -> {
-                    val intent = Intent(this, SettingsActivity::class.java)
-                    startActivity(intent)
-                }
-                R.id.nav_about -> {
-                    // Открыть информацию о проекте
-                    val intent = Intent(this, WebViewActivity::class.java)
-                    startActivity(intent)
-                }
-            }
-            drawerLayout.closeDrawer(GravityCompat.START)
-            true
-        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             android.R.id.home -> {
-                // открывает боковое меню
-                drawerLayout.openDrawer(GravityCompat.START)
+                // возвращает назад на предыдущий экран
+                onBackPressedDispatcher.onBackPressed()
                 true
             }
             else -> super.onOptionsItemSelected(item)

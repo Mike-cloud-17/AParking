@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.aparking.MapViewModel
 import com.example.aparking.R
+import com.example.aparking.User
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.example.aparking.databinding.FragmentChooseParkingSpotBinding
 import com.example.aparking.parkingTimer.ParkingActionListener
@@ -104,6 +105,8 @@ class ChooseParkingSpotFragment : BottomSheetDialogFragment() {
                 binding.carNumber.text = selectedCarNumber
                 binding.carTitle.text = selectedCarTitle
                 popupWindow.dismiss()
+                //отмечаем выбранную машину у пользователя
+                User.getInstance().selectCar(selectedCarTitle)
             }
 
             // обработка нажатия на ImageButton

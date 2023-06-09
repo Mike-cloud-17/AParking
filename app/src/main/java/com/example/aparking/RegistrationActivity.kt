@@ -18,6 +18,9 @@ class RegistrationActivity : AppCompatActivity() {
         val carNumber = findViewById<EditText>(R.id.carNumber)
         val registerButton = findViewById<Button>(R.id.registerButton)
 
+        // Создаем текущего пользователя
+        val user: User = User.getInstance()
+
         registerButton.setOnClickListener {
             val enteredName = name.text.toString()
             val enteredSurname = surname.text.toString()
@@ -25,7 +28,11 @@ class RegistrationActivity : AppCompatActivity() {
             val enteredCarNumber = carNumber.text.toString()
 
             // Регистрируем нового пользователя (в этом примере мы просто сравниваем введенные данные с определенными значениями для демонстрации)
-            if (enteredName == "Михаил" && enteredSurname == "Шкляр" && enteredBirthdate == "17.07.2001" && enteredCarNumber == "777KNS02") {
+            if (validateInput(enteredName, enteredSurname, enteredBirthdate, enteredCarNumber)) {
+                // Сохраняем данные у пользователя
+                user.name = enteredName
+                user.surname = enteredSurname
+                user.birthday = enteredBirthdate
                 // Переход к экрану успешного входа
                 val intent = Intent(this, SuccessfulLoginActivity::class.java)
                 startActivity(intent)
@@ -34,5 +41,21 @@ class RegistrationActivity : AppCompatActivity() {
                 Toast.makeText(this, "Вы ввели некорректные данные", Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+    private fun validateInput(name:String, surname: String, birthDate: String, carNumber: String): Boolean {
+        if (name.any { it.isDigit() } || surname.any { it.isDigit() }) {
+            return false
+        }
+
+        if (birthDate.length != 10) {
+            return false
+        }
+
+        if (carNumber.length != 8) {
+            return false
+        }
+
+        return true
     }
 }
