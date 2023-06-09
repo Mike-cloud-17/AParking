@@ -31,7 +31,7 @@ class ParkingSpotsRepository {
         // Generate Moscow points
         latRange = 55.70..55.77
         lonRange = 37.58..37.76
-        for (i in 0 until 999) {
+        for (i in 200 until 1199) {
             val latitude = Random.nextDouble(latRange.start, latRange.endInclusive)
             val longitude = Random.nextDouble(lonRange.start, lonRange.endInclusive)
             val isOccupied = Random.nextBoolean()

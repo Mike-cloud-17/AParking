@@ -417,7 +417,7 @@ class MapFragment : Fragment(), Session.SearchListener, MapObjectTapListener, Cl
 
     override fun onClusterAdded(cluster: Cluster) {
         val spots = cluster.placemarks.map { parkingSpots[ComparablePoint.fromPoint(it.geometry)] }
-        val occupied = spots.count { it?.isOccupied!! }
+        val occupied = spots.count { it?.isOccupied == true }
         val compareResult = occupied.compareTo(spots.size / 2.0)
         val view = ClusterCircleView(requireContext())
         view.setText(cluster.size.toString())
