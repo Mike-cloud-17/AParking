@@ -3,7 +3,6 @@ package com.example.aparking
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
-import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -28,6 +27,8 @@ class CarsActivity : AppCompatActivity() {
 
         binding = ActivityCarsBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        
+        binding.imageButton.setOnClickListener { finish() }
 
         adapter = CarsAdapter(cars)
         binding.recycler.layoutManager = LinearLayoutManager(this)

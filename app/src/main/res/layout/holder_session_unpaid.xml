@@ -153,6 +153,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginVertical="20dp"/>
     <TextView
+        android:id="@+id/price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="289.64"
@@ -162,6 +163,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginBottom="20dp"/>
     <Button
+        android:id="@+id/pay_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"

@@ -53,7 +53,7 @@ class PointBottomSheet : BottomSheetDialogFragment() {
     private fun setPointData(point: ParkingSpot) {
         location = Point(point.latitude!!, point.longitude!!)
         binding.address.text = point.address
-        binding.condition.text = if (point.isOccupied!!) "Занято" else "Свободно"
+        binding.condition.text = if (point.isOccupied) "Занято" else "Свободно"
         binding.distance.text = getString(R.string.distance, point.distanceToSpot)
     }
 }
