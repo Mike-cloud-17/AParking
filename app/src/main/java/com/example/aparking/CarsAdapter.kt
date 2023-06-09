@@ -67,6 +67,11 @@ class CarsAdapter(
             }
         }
     }
+
+    fun removeCar(position: Int) {
+        cars.removeAt(position)
+        notifyItemRemoved(position)
+    }
 }
 
 class CarViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

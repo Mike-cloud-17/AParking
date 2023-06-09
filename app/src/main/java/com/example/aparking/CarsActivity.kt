@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.aparking.databinding.ActivityCarsBinding
@@ -34,5 +35,12 @@ class CarsActivity : AppCompatActivity() {
         dividerItemDecoration.setDrawable(AppCompatResources.getDrawable(this, R.drawable.divider_space)!!)
         binding.recycler.adapter = adapter
         binding.recycler.addItemDecoration(dividerItemDecoration)
+        val swipeHandler = object : SwipeToDeleteCallback(this) {
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                adapter.removeCar(viewHolder.adapterPosition)
+            }
+        }
+        val itemTouchHelper = ItemTouchHelper(swipeHandler)
+        itemTouchHelper.attachToRecyclerView(binding.recycler)
     }
 }
