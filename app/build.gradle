@@ -7,6 +7,7 @@ android {
     compileSdk 33
 
     defaultConfig {
+        namespace 'com.example.aparking'
         applicationId "com.example.aparking"
         minSdk 29
         targetSdk 33

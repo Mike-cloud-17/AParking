@@ -13,6 +13,7 @@
     <string name="parking_address">Адрес парковки</string>
     <string name="parking_time">Время стоянки</string>
     <string name="purchase">Оплатить</string>
+    <string name="to_pay">К оплате</string>
     <string name="debt">Задолженность</string>
     <string name="purchased">Оплачено</string>
     <string name="load">Загрузка</string>
@@ -32,4 +33,5 @@
     <string name="being_used">Сейчас используется</string>
     <string name="will_use">Поеду на нем</string>
     <string name="my_cars">Мои автомобили</string>
+    <string name="finished_session">Текущая парковочная сессия закрыта</string>
 </resources>
