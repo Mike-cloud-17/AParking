@@ -15,7 +15,7 @@ class LoginActivity : AppCompatActivity() {
         val sharedPreferences = getSharedPreferences("AParking", Context.MODE_PRIVATE)
         val isLogged = sharedPreferences.getBoolean("isLogged", false)
 
-        if (isLogged) {
+        if (!isLogged) {
             // Переход на экран с картой, так как пользователь уже вошел
             val intent = Intent(this, MapActivity::class.java)
             startActivity(intent)

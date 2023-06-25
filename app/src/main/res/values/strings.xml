@@ -24,7 +24,7 @@
     <string name="free_progress">Свободно:</string>
     <string name="number_unpaid_header">Неоплаченные сессии (%1$d)</string>
     <string name="history">История</string>
-    <string name="unpaid_header">Неоплаченные сессии</string>
+    <string name="unpaid_header">Неоплаченные</string>
     <string name="clear_history">Очистить историю</string>
     <string name="distance">%1$d м</string>
     <string name="car_brand">Марка автомобиля</string>

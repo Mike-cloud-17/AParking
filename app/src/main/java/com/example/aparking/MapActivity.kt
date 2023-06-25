@@ -5,21 +5,17 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
-import androidx.activity.viewModels
 import com.google.android.material.navigation.NavigationView
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.core.view.GravityCompat
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.replace
+import com.example.aparking.parkingTimer.FIRST_SCREEN
 import com.example.aparking.parkingTimer.ParkingActionListener
 import com.example.aparking.parkingTimer.ParkingTimerFragment
-import com.yandex.mapkit.MapKitFactory
-import com.yandex.mapkit.directions.DirectionsFactory
-import com.yandex.mapkit.transport.TransportFactory
+import com.example.aparking.sessions.SessionsActivity
+
+const val UNPAID_SESSIONS = "unpaid_sessions"
 
 class MapActivity : AppCompatActivity(), ParkingActionListener {
-    private val viewModel: MapViewModel by viewModels()
-
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var toggle: ActionBarDrawerToggle
 
@@ -44,6 +40,11 @@ class MapActivity : AppCompatActivity(), ParkingActionListener {
                 R.id.nav_profile -> {
                     // Открыть профиль
                     val intent = Intent(this, ProfileActivity::class.java)
+                    startActivity(intent)
+                }
+                R.id.nav_sessions -> {
+                    val intent = Intent(this, SessionsActivity::class.java)
+                        .putExtra(FIRST_SCREEN, UNPAID_SESSIONS)
                     startActivity(intent)
                 }
                 R.id.nav_map -> {

@@ -5,6 +5,11 @@
         android:title="Профиль" />
 
     <item
+        android:id="@+id/nav_sessions"
+        android:icon="@drawable/ic_unpaid"
+        android:title="Неоплаченные сессии" />
+
+    <item
         android:id="@+id/nav_map"
         android:icon="@drawable/ic_map"
         android:title="Карта парковок" />

@@ -13,6 +13,9 @@ import com.example.aparking.MapViewModel
 import com.example.aparking.sessions.SessionsActivity
 import com.example.aparking.databinding.FragmentParkingTimerBinding
 
+const val FIRST_SCREEN = "first_screen"
+const val CURRENT_SESSION = "current_session"
+
 interface ParkingActionListener {
     fun onStartParking()
 }
@@ -56,6 +59,7 @@ class ParkingTimerFragment : Fragment() {
                 Intent(activity, SessionsActivity::class.java)
                     .putExtra("current_time", time)
                     .putExtra("spot_number", spotNumber)
+                    .putExtra(FIRST_SCREEN, CURRENT_SESSION)
             )
         }
     }
