@@ -10,6 +10,7 @@
     <application
         android:name=".MyApplication"
         android:allowBackup="false"
+        android:usesCleartextTraffic="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
@@ -48,11 +49,11 @@
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".RegistrationActivity"
+            android:name=".authorization.RegistrationActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ConfirmationActivity"
+            android:name=".authorization.ConfirmationActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
@@ -60,11 +61,15 @@
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".sessions.UnpaidSessionsActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".CarsActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".authorization.LoginActivity"
             android:exported="true"
             android:screenOrientation="portrait">
             <intent-filter>

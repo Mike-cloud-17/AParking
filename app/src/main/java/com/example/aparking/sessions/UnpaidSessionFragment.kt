@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -28,7 +29,14 @@ class UnpaidSessionFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.header.text = getString(R.string.number_unpaid_header, 2)
+        val showHeader = arguments?.getBoolean("showHeader") ?: true
+
+        if (showHeader) {
+            binding.header.text = getString(R.string.number_unpaid_header, 2)
+            view.background = ContextCompat.getDrawable(requireContext(), R.drawable.holder_rounded_top_yellow)
+        } else {
+            binding.header.visibility = View.GONE
+        }
 
         adapter = UnpaidSessionAdapter(SessionsRepository().getSessions().take(4).toMutableList())
         binding.recycler.layoutManager = LinearLayoutManager(context)

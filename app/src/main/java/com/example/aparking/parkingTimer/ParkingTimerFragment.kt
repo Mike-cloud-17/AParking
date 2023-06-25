@@ -9,7 +9,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import com.example.aparking.FinishedSessionFragment
 import com.example.aparking.MapViewModel
+import com.example.aparking.ParkingFragment
+import com.example.aparking.R
 import com.example.aparking.sessions.SessionsActivity
 import com.example.aparking.databinding.FragmentParkingTimerBinding
 
@@ -27,11 +30,15 @@ class ParkingTimerFragment : Fragment() {
     private var time = 0L
     private var spotNumber = ""
 
+    private var isFinishedFragmentShown = false // for 30 sec
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentParkingTimerBinding.inflate(inflater, container, false)
+
+
 
         viewModel.timeString.observe(viewLifecycleOwner) {
             binding.textViewTimer.text = it
@@ -44,6 +51,25 @@ class ParkingTimerFragment : Fragment() {
         }
 
         viewModel.startTimer()
+
+        //////// Запуск спустя 30 секунд
+        viewModel.parkingFinished.observe(viewLifecycleOwner) { isFinished ->
+            if (isFinished && !isFinishedFragmentShown) {
+                val parkingFinishedFragment = FinishedSessionFragment()
+
+                // Запустить ParkingFragment вместо ParkingTimerFragment
+                parentFragmentManager
+                    .beginTransaction()
+                    .add(R.id.parking_fragment_container, ParkingFragment())
+                    .commit()
+
+                // Показать parkingFinishedFragment
+                parkingFinishedFragment.show(parentFragmentManager, "Session is finished")
+
+                // Отметить, что фрагмент был показан
+                isFinishedFragmentShown = true
+            }
+        }
 
         // Делаем фон диалогового окна прозрачным
         binding.root.setBackgroundColor(Color.TRANSPARENT)

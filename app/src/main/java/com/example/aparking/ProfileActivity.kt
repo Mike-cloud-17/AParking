@@ -8,6 +8,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.aparking.authorization.LoginActivity
 
 class ProfileActivity : AppCompatActivity() {
     // создаем экземпляр User здесь
@@ -36,8 +37,9 @@ class ProfileActivity : AppCompatActivity() {
         logoutButton = findViewById(R.id.logout_button)
 
         // заполняем поля данными из экземпляра User
-        nameEditText.setText(user.name)
-        surnameEditText.setText(user.surname)
+        val fullName: List<String> = user.fullName.split(" ")
+        nameEditText.setText(fullName[0])
+        surnameEditText.setText(fullName[1])
         dobEditText.setText(user.birthday)
 
         nameEditText.isEnabled = isInEditMode
@@ -50,8 +52,8 @@ class ProfileActivity : AppCompatActivity() {
             if (isInEditMode) {
                 // обновляем User
                 if (validateInput()) {
-                    user.name = nameEditText.text.toString()
-                    user.surname = surnameEditText.text.toString()
+                    user.fullName = nameEditText.text.toString() + " "
+                    user.fullName += surnameEditText.text.toString()
                     user.birthday = dobEditText.text.toString()
 
                     isInEditMode = false

@@ -7,6 +7,7 @@ android {
     compileSdk 33
 
     defaultConfig {
+        namespace 'com.example.aparking'
         applicationId "com.example.aparking"
         minSdk 29
         targetSdk 33
@@ -51,6 +52,10 @@ dependencies {
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.0'
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.6.1"
+
+    // Retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
 
     implementation 'androidx.core:core-ktx:1.10.1'
     implementation 'androidx.fragment:fragment-ktx:1.5.7'

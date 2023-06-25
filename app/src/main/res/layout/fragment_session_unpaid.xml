@@ -3,10 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@drawable/holder_rounded_top_yellow"
-    android:paddingTop="40dp">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <TextView
+        android:paddingTop="40dp"
         android:id="@+id/header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

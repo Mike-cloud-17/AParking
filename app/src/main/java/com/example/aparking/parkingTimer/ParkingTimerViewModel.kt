@@ -13,6 +13,10 @@ class ParkingTimerViewModel : ViewModel() {
     val timeString: LiveData<String> = _timeString
     val time: LiveData<Long> = _time
 
+    ////////////// Close in 30 sec
+    private val _parkingFinished = MutableLiveData<Boolean>()
+    val parkingFinished: LiveData<Boolean> = _parkingFinished
+
     private var timer: CountDownTimer? = null
 
     fun startTimer() {
@@ -22,6 +26,11 @@ class ParkingTimerViewModel : ViewModel() {
                 timeInMilliseconds += 1000
                 _time.value = timeInMilliseconds
                 _timeString.value = convertTime(timeInMilliseconds)
+
+                /////////////////////
+                if (timeInMilliseconds >= 30000) {
+                    _parkingFinished.value = true
+                }
             }
 
             override fun onFinish() {
