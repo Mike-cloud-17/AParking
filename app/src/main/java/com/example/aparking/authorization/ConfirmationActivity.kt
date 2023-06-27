@@ -44,10 +44,10 @@ class ConfirmationActivity : AppCompatActivity() {
             val phoneNumberNonNull = phoneNumber ?: return@setOnClickListener // добавлено обрабатывание null
 
             // Запрос на сервер для проверки кода подтверждения
-            val call = service.verifyCode(VerificationRequest(requestIdNonNull, enteredCode, phoneNumberNonNull))
+            val call = service.authenticateUser(AuthenticateRequest(requestIdNonNull, enteredCode, phoneNumberNonNull))
 
-            call.enqueue(object : Callback<LoginResponse> {
-                override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
+            call.enqueue(object : Callback<AuthenticateResponse> {
+                override fun onResponse(call: Call<AuthenticateResponse>, response: Response<AuthenticateResponse>) {
                     val responseBody = response.body() // добавлено обрабатывание null
                     if (response.isSuccessful && responseBody != null) {
                         // Сохраняем номер телефона
@@ -55,10 +55,9 @@ class ConfirmationActivity : AppCompatActivity() {
 
                         if (responseBody.status == "login") {
                             // Сохраняем токен и переходим к главному экрану
-                            sharedPreferencesHelper.saveToken(responseBody.token)
                             val intent = Intent(this@ConfirmationActivity, SuccessfulLoginActivity::class.java)
                             startActivity(intent)
-                        } else if (responseBody.status == "register") {
+                        } else if (responseBody.status == "registration") {
                             // Переход к экрану регистрации
                             val intent = Intent(this@ConfirmationActivity, RegistrationActivity::class.java)
                             startActivity(intent)
@@ -72,7 +71,7 @@ class ConfirmationActivity : AppCompatActivity() {
                     }
                 }
 
-                override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
+                override fun onFailure(call: Call<AuthenticateResponse>, t: Throwable) {
                     // Обработка ошибки
                     Toast.makeText(this@ConfirmationActivity, "Ошибка соединения с сервером. Попробуйте еще раз.", Toast.LENGTH_LONG).show()
                 }

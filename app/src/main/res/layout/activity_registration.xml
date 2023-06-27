@@ -37,10 +37,22 @@
         android:layout_height="wrap_content"
         android:hint="Дата рождения (ДД.ММ.ГГГГ)"
         android:layout_marginTop="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/carNumber"
+        app:layout_constraintBottom_toTopOf="@+id/mark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/surname" />
+
+
+    <EditText
+        android:id="@+id/mark"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Марка авто"
+        android:layout_marginTop="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/carNumber"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/birthdate" />
 
     <EditText
         android:id="@+id/carNumber"
@@ -53,7 +65,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.662"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/birthdate"
+        app:layout_constraintTop_toBottomOf="@+id/mark"
         tools:ignore="TextFields" />
 
     <Button
