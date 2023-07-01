@@ -1,0 +1,56 @@
+syntax = "proto3";
+
+package com.example.kafkaconsumerservice.grpc;
+
+message ParkingSpot {
+  int64 id = 1;
+  string sensorId = 2;
+  bool isOccupied = 3;
+  string spotNumber = 4;
+  string startTime = 5;  // Часы представлены как строки в формате ISO-8601
+  string endTime = 6;    // Часы представлены как строки в формате ISO-8601
+  double latitude = 7;
+  double longitude = 8;
+  int64 currentUserId = 9;
+  string currentCarNumber = 10;
+}
+
+service ParkingSpotService {
+  rpc StreamParkingSpots (StreamRequest) returns (stream ParkingSpot) {}
+}
+
+message StreamRequest {
+}
+
+
+
+//syntax = "proto3";
+//
+//option java_multiple_files = true;
+//option java_package = "com.example.kafkaconsumerservice.grpc";
+//option java_outer_classname = "ParkingSpotProto";
+//
+//package parkingspot;
+//
+//import "google/protobuf/timestamp.proto";
+//
+//message ParkingSpot {
+//  int64 id = 1;
+//  string sensorId = 2;
+//  bool isOccupied = 3;
+//  string spotNumber = 4;
+//  google.protobuf.Timestamp startTime = 5;
+//  google.protobuf.Timestamp endTime = 6;
+//  double latitude = 7;
+//  double longitude = 8;
+//  int64 currentUserId = 9;
+//  string currentCarNumber = 10;
+//}
+//
+//service ParkingSpotService {
+//  rpc StreamParkingSpots (StreamRequest) returns (stream ParkingSpot) {}
+//}
+//
+//message StreamRequest {
+//  // Добавьте здесь любые параметры, необходимые для запроса потока
+//}

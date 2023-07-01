@@ -2,9 +2,11 @@ package com.example.aparking
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.yandex.mapkit.geometry.Point
+import kotlinx.coroutines.launch
 
-class MapViewModel : ViewModel() {
+class MapViewModel(private val repository: ParkingSpotsRepository) : ViewModel() {
     private var showRouteLiveData = MutableLiveData<Boolean>()
     private var showRouteToLiveData = MutableLiveData<Point>()
     private var showRouteIconLiveData = MutableLiveData(true)
@@ -53,4 +55,18 @@ class MapViewModel : ViewModel() {
     fun getLoadLiveData() = loadLiveData
 
     fun getSpotLiveData() = spotLiveData
+
+    // gRPC
+    val parkingSpotsLiveData = MutableLiveData<List<ParkingSpot>>()
+
+    fun fetchParkingSpots() {
+        viewModelScope.launch {
+            val response = repository.getParkingSpots()
+            if (response.isSuccessful) {
+                parkingSpotsLiveData.postValue(response.body())
+            } else {
+                // обработать ошибку
+            }
+        }
+    }
 }

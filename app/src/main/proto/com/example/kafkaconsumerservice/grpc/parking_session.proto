@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package kz.aparking.parkingsession;
+
+message ParkingSession {
+  string parkingSpotNumber = 1;
+  string startTime = 2;
+  string endTime = 3;
+  string carNumber = 4;
+  int64 userId = 5;
+  double price = 6;
+  bool isPaid = 7;
+}
+
+message StreamRequest {
+  int64 userId = 1;
+}
+
+service ParkingSessionService {
+  rpc streamParkingSessions (StreamRequest) returns (stream ParkingSession) {}
+}
