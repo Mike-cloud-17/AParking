@@ -45,8 +45,6 @@ import com.yandex.runtime.network.NetworkError
 import com.yandex.runtime.network.RemoteError
 import com.yandex.runtime.ui_view.ViewProvider
 import java.util.TreeMap
-import kotlin.random.Random
-
 
 class MapFragment : Fragment(), Session.SearchListener, MapObjectTapListener, ClusterTapListener,
     DrivingRouteListener, ClusterListener {

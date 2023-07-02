@@ -6,7 +6,8 @@ import androidx.lifecycle.viewModelScope
 import com.yandex.mapkit.geometry.Point
 import kotlinx.coroutines.launch
 
-class MapViewModel(private val repository: ParkingSpotsRepository) : ViewModel() {
+//class MapViewModel(private val repository: ParkingSpotsRepository) : ViewModel() {
+class MapViewModel() : ViewModel() {
     private var showRouteLiveData = MutableLiveData<Boolean>()
     private var showRouteToLiveData = MutableLiveData<Point>()
     private var showRouteIconLiveData = MutableLiveData(true)
