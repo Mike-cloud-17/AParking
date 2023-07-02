@@ -4,7 +4,8 @@ import com.example.aparking.authorization.APIService
 import retrofit2.Response
 import kotlin.random.Random
 
-class ParkingSpotsRepository(private val apiService: APIService) {
+//class ParkingSpotsRepository(private val apiService: APIService) {
+class ParkingSpotsRepository() {
     private var parkingSpots: MutableList<ParkingSpot> = mutableListOf()
 
     init {
@@ -48,31 +49,32 @@ class ParkingSpotsRepository(private val apiService: APIService) {
         }
     }
 
-//    fun getParkingSpots(): MutableList<ParkingSpot> = parkingSpots
-
-
-    // gRPC
-    suspend fun addNewParkingSpot(parkingSpot: ParkingSpot): Response<Void> {
-        return apiService.addNewParkingSpot(parkingSpot)
-    }
-
-    suspend fun getParkingSpots(): Response<List<ParkingSpot>> {
-        return apiService.getParkingSpots()
-    }
-
-    suspend fun getParkingSpotById(parkingId: Long): Response<ParkingSpot> {
-        return apiService.getParkingSpotById(parkingId)
-    }
-
-    suspend fun getAvailableParkingSpots(latitude: Double, longitude: Double, radius: Double): Response<List<ParkingSpot>> {
-        return apiService.getAvailableParkingSpots(latitude, longitude, radius)
-    }
-
-    suspend fun getPossibleParkingSpots(): Response<List<ParkingSpot>> {
-        return apiService.getPossibleParkingSpots()
-    }
-
-    suspend fun checkGrpcConnection(id: Long): Response<Void> {
-        return apiService.checkGrpcConnection(id)
-    }
+    fun getParkingSpots(): MutableList<ParkingSpot> = parkingSpots
 }
+
+
+// gRPC
+//    suspend fun addNewParkingSpot(parkingSpot: ParkingSpot): Response<Void> {
+//        return apiService.addNewParkingSpot(parkingSpot)
+//    }
+//
+////    suspend fun getParkingSpots(): Response<List<ParkingSpot>> {
+////        return apiService.getParkingSpots()
+////    }
+//
+//    suspend fun getParkingSpotById(parkingId: Long): Response<ParkingSpot> {
+//        return apiService.getParkingSpotById(parkingId)
+//    }
+//
+//    suspend fun getAvailableParkingSpots(latitude: Double, longitude: Double, radius: Double): Response<List<ParkingSpot>> {
+//        return apiService.getAvailableParkingSpots(latitude, longitude, radius)
+//    }
+//
+//    suspend fun getPossibleParkingSpots(): Response<List<ParkingSpot>> {
+//        return apiService.getPossibleParkingSpots()
+//    }
+//
+//    suspend fun checkGrpcConnection(id: Long): Response<Void> {
+//        return apiService.checkGrpcConnection(id)
+//    }
+//}

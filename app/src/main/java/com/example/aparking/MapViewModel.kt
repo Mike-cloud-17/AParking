@@ -59,14 +59,14 @@ class MapViewModel(private val repository: ParkingSpotsRepository) : ViewModel()
     // gRPC
     val parkingSpotsLiveData = MutableLiveData<List<ParkingSpot>>()
 
-    fun fetchParkingSpots() {
-        viewModelScope.launch {
-            val response = repository.getParkingSpots()
-            if (response.isSuccessful) {
-                parkingSpotsLiveData.postValue(response.body())
-            } else {
-                // обработать ошибку
-            }
-        }
-    }
+//    fun fetchParkingSpots() {
+//        viewModelScope.launch {
+//            val response = repository.getParkingSpots()
+//            if (response.isSuccessful) {
+//                parkingSpotsLiveData.postValue(response.body())
+//            } else {
+//                // обработать ошибку
+//            }
+//        }
+//    }
 }
